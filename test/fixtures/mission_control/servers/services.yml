@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  hostname: MyString
+  cpu: 9.99
+  mem_used: 9.99
+  mem_free: 9.99
+  disk_free: 9.99
+
+two:
+  project: two
+  hostname: MyString
+  cpu: 9.99
+  mem_used: 9.99
+  mem_free: 9.99
+  disk_free: 9.99
