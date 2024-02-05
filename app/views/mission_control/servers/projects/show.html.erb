@@ -6,7 +6,7 @@
         <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
         </svg>
-        <%= link_to project_ingress_url(@project), project_ingress_url(@project) %>
+        <%= link_to project_ingress_url(@project.token), project_ingress_url(@project.token) %>
       </div>
     </div>
   </div>
@@ -14,115 +14,104 @@
   <div class="mt-5 flex lg:ml-4 lg:mt-0">
     <span class="hidden sm:block">
       <%= link_to edit_project_path(@project), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
-        <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
-        </svg>
         Edit
       <% end %>
+      <%= link_to projects_path, class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
+        Projects
+      <% end %>
+
+      <span data-controller="dialog copy">
+        <button data-action="click->dialog#show" class="rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">
+          Deploy
+        </button>
+        <div data-dialog-target="modal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <div data-action="click->dialog#hide" class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+          <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center">
+            <!-- Increased max-width to md:max-w-3xl for a wider modal -->
+            <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 md:max-w-3xl sm:w-full">
+              <div class="px-4 pt-5 pb-4 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Installation Instructions</h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    You'll make a cURL request from each server that you want to monitor. Copy and paste the script below to each server to start sending metrics to your dashboard.
+                  </p>
+                  <button data-action="click->copy#copy" class="rounded-md bg-blue-500 mt-4 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600">
+                    Copy
+                  </button>
+                    <pre data-copy-target="source" class="bg-gray-700 text-white p-4 mt-4 text-sm overflow-x-auto">
+cat <<'EOF' > metrics.sh
+#!/bin/bash
+
+endpoint="<%= project_ingress_url(@project.token) %>"
+cpu_usage=$(
+  top -bn1 | \
+  grep "Cpu(s)" | \
+  sed "s/.*, *\\([0-9.]*\\)%* id.*/\\1/" | \
+  awk '{print 100 - $1}'
+)
+mem_free=$(free -m | awk '/^Mem:/ {print $3}')
+mem_used=$(free -m | awk '/^Mem:/ {print $7}')
+disk_free=$(df -h | awk '\$NF=="/"{print $4}')
+hostname=$(hostname)
+
+data="service[cpu]=\$cpu_usage"
+data+="&service[mem_used]=\$mem_free"
+data+="&service[mem_free]=\$mem_used"
+data+="&service[disk_free]=\$disk_free"
+data+="&service[hostname]=\$hostname"
+
+curl -X POST "\$endpoint" -d "\$data"
+EOF
+
+chmod +x metrics.sh
+
+(crontab -l 2>/dev/null; echo "* * * * * \$(pwd)/metrics.sh") | crontab -</pre>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </span>
+
     </span>
   </div>
 </div>
 
+<% @services.each do |hostname, services| %>
+  <div class="bg-white py-4 sm:py-8">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:max-w-none">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= hostname %></h2>
+        </div>
+        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-3">
+          <%= turbo_frame_tag dom_id(@project, [hostname, :cpu_usage].join('-')),
+            src: project_dashboards_cpu_usage_path(project_id: @project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_cpu_usage_path(project_id: @project.token, hostname: hostname),
+            "data-refresh-interval-value": 30000 %>
 
-<div class="bg-white py-24 sm:py-32">
-  <div class="mx-auto max-w-7xl px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl lg:max-w-none">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">web server 1</h2>
+          <%= turbo_frame_tag dom_id(@project, [hostname, :memory_usage].join('-')),
+            src: project_dashboards_memory_usage_path(project_id: @project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_cpu_usage_path(project_id: @project.token, hostname: hostname),
+            "data-refresh-interval-value": 30000 %>
+
+          <%= turbo_frame_tag dom_id(@project, [hostname, :disk_free].join('-')),
+            src: project_dashboards_disk_free_path(project_id: @project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_cpu_usage_path(project_id: @project.token, hostname: hostname),
+            "data-refresh-interval-value": 60000 %>
+        </dl>
+        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-1">
+          <%= turbo_frame_tag dom_id(@project, [hostname, :cpu_history].join('-')),
+            src: project_dashboards_cpu_history_path(project_id: @project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_cpu_usage_path(project_id: @project.token, hostname: hostname),
+            "data-refresh-interval-value": 60000 %>
+        </dl>
       </div>
-      <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-3">
-        <div class="flex flex-col bg-gray-400/5 p-8">
-          <dt class="text-sm font-semibold leading-6 text-gray-600">
-            <canvas id="cpuUsage"></canvas>
-          </dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">CPU Usage</dd>
-        </div>
-        <div class="flex flex-col bg-gray-400/5 p-8">
-          <dt class="text-sm font-semibold leading-6 text-gray-600">
-            <canvas id="freeMemory"></canvas>
-          </dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">Memory Usage</dd>
-        </div>
-        <div class="flex flex-col bg-gray-400/5 p-8">
-          <dt class="text-6xl font-semibold leading-6 mt-5 text-gray-600">
-            918Gi
-          </dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">Disk Free</dd>
-        </div>
-      </dl>
-      <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-1">
-        <div class="flex flex-col bg-gray-400/5 p-8">
-          <dt class="text-sm font-semibold leading-6 text-gray-600">
-            <canvas id="cpuHistory"></canvas>
-          </dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">CPU History</dd>
-        </div>
-      </dl>
     </div>
   </div>
-</div>
+<% end %>
 
-
-<script>
-  var ctx = document.getElementById('cpuHistory');
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['9:01pm', '9:02pm', '9:03pm', '9:04pm', '9:05pm', '9:06pm', '9:07pm'],
-      datasets: [{
-        label: 'CPU Usage',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    }
-  });
-</script>
-
-<script>
-  var ctx = document.getElementById('freeMemory');
-
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: [
-        'Used',
-        'Free'
-      ],
-      datasets: [{
-        label: 'Memory',
-        data: [300, 100],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)'
-        ],
-        hoverOffset: 4
-      }]
-    }
-  });
-</script>
-
-<script>
-  var ctx = document.getElementById('cpuUsage');
-
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: [
-        'Active',
-        'Idle'
-      ],
-      datasets: [{
-        label: 'CPU Usage',
-        data: [300, 100],
-        backgroundColor: [
-          'rgb(54, 162, 235)',
-          'rgb(235, 235, 235)'
-        ],
-        hoverOffset: 4
-      }]
-    }
-  });
-</script>

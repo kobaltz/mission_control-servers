@@ -6,7 +6,7 @@ class CreateMissionControlServersServices < ActiveRecord::Migration[7.1]
       t.decimal :cpu, precision: 8, scale: 2
       t.decimal :mem_used, precision: 8, scale: 2
       t.decimal :mem_free, precision: 8, scale: 2
-      t.decimal :disk_free, precision: 8, scale: 2
+      t.string :disk_free
 
       t.timestamps
     end

@@ -9,6 +9,11 @@ module MissionControl::Servers
 
     # GET /projects/1
     def show
+      @services = if params[:hostname]
+        @project.services.where(hostname: params[:hostname]).group_by(&:hostname)
+      else
+        @project.services.group_by(&:hostname)
+      end
     end
 
     # GET /projects/new

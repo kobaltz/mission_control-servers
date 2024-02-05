@@ -1,0 +1,18 @@
+<%= turbo_frame_tag dom_id(@project, [@hostname, :cpu_usage].join('-')) do %>
+  <div class="progress-bar bg-gray-300" style="height: 5px; width: 100%;">
+    <div class="progress bg-blue-500" data-refresh-target="progressBar" style="height: 100%; width: 100%;"></div>
+  </div>
+  <div class="flex flex-col bg-gray-400/5 p-8">
+    <dt class="text-sm font-semibold leading-6 text-gray-600">
+      <canvas data-controller="pie-chart"
+        data-pie-chart-label-value="CPU Usage"
+        data-pie-chart-idle-value="<%= 100.0 - @service.cpu %>"
+        data-pie-chart-idle-label-value="Idle"
+        data-pie-chart-idle-color-value="rgb(235, 235, 235)"
+        data-pie-chart-used-value="<%= @service.cpu %>"
+        data-pie-chart-used-label-value="Active"
+        data-pie-chart-used-color-value="rgb(54, 162, 235)"></canvas>
+    </dt>
+    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">CPU Usage</dd>
+  </div>
+<% end %>
