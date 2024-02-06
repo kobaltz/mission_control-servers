@@ -1,5 +1,6 @@
 # MissionControl::Servers
-Don't use this yet. It will be a gem to monitor servers and send the data to Mission Control.
+Don't use this yet as it is under rapid development. The goal of MissionControl::Servers is to provide a simple monitoring of the resources
+on your Ruby on Rails application. You can either use this directly on the projects or create a separate Ruby on Rails application to mount this in.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -9,24 +10,37 @@ bundle add "mission_control-servers"
 bin/rails mission_control_servers:install:migrations
 ```
 
+Add a mount to your `config/routes.rb`
 
+```ruby
+mount MissionControl::Servers::Engine => "/mission_control-servers"
+```
 # Usage
 
-Use within your own Rails application or have a separate application to monitor your servers.
+Create a project. Once you create a project, you can easily copy the script specific to that project.
 
-You'll make a POST request to the endpoint with the following parameters:
+Install a script which captures:
 
-```
-endpoint="https://YOUR_APPLICATION/mission_control-servers/projects/YOUR_TOKEN/ingress"; cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1""}'); mem_free=$(free -m | awk '/^Mem:/ {print $3}'); mem_used=$(free -m | awk '/^Mem:/ {print $7}'); disk_free=$(df -h | awk '$NF=="/"{print $4}'); curl -X POST $endpoint -d "service[cpu]=$cpu_usage&service[mem_used]=$mem_free&service[mem_free]=$mem_used&service[disk_free]=$disk_free&service[hostname]=${hostname}"
-```
+- Hostname
+- CPU Usage
+- Memory Usage
+- Free Memory
+- Free Disk Space
 
-This script should be added to a cron job to run every minute (or however often you want to monitor your servers).
-
-Change `YOUR_APPLICATION` to your application's endpoint and `YOUR_TOKEN` to your project's token.
+The data will be retained for 7 days automatically. After 7 days, the data will start truncating itself so that it doesn't take
+up much disk space within the database.
 
 # Screenshots
 
-These are going to change rapidly as the project is in development.
+Simple Installation
+
+![ScreenShot-2024-02-06-00-25-46](https://github.com/kobaltz/mission_control-servers/assets/635114/8486c465-27b5-4db8-a56f-c0df4c5fe583)
+
+View all of your projects
+
+![ScreenShot-2024-02-06-00-26-37](https://github.com/kobaltz/mission_control-servers/assets/635114/b7e37682-34ff-404a-a158-92e310496696)
+
+Detailed Dashboard updates automatically
 
 ![ScreenShot-2024-02-05-20-06-07](https://github.com/kobaltz/mission_control-servers/assets/635114/aea31795-80e5-41ae-bad4-8233386dc31f)
 
