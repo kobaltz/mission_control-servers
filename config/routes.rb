@@ -1,6 +1,7 @@
 MissionControl::Servers::Engine.routes.draw do
   resources :projects do
     resource :ingress, only: :create
+    resource :script, only: :show
     namespace :dashboards do
       resource :cpu_usage, only: :show
       resource :memory_usage, only: :show

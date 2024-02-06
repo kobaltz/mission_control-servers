@@ -38,34 +38,7 @@
                   <button data-action="click->copy#copy" class="rounded-md bg-blue-500 mt-4 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600">
                     Copy
                   </button>
-                    <pre data-copy-target="source" class="bg-gray-700 text-white p-4 mt-4 text-sm overflow-x-auto">
-cat <<'EOF' > metrics.sh
-#!/bin/bash
-
-endpoint="<%= project_ingress_url(@project.token) %>"
-cpu_usage=$(
-  top -bn1 | \
-  grep "Cpu(s)" | \
-  sed "s/.*, *\\([0-9.]*\\)%* id.*/\\1/" | \
-  awk '{print 100 - $1}'
-)
-mem_free=$(free -m | awk '/^Mem:/ {print $3}')
-mem_used=$(free -m | awk '/^Mem:/ {print $7}')
-disk_free=$(df -h | awk '\$NF=="/"{print $4}')
-hostname=$(hostname)
-
-data="service[cpu]=\$cpu_usage"
-data+="&service[mem_used]=\$mem_free"
-data+="&service[mem_free]=\$mem_used"
-data+="&service[disk_free]=\$disk_free"
-data+="&service[hostname]=\$hostname"
-
-curl -X POST "\$endpoint" -d "\$data"
-EOF
-
-chmod +x metrics.sh
-
-(crontab -l 2>/dev/null; echo "* * * * * \$(pwd)/metrics.sh") | crontab -</pre>
+                    <pre data-copy-target="source" class="bg-gray-700 text-white p-4 mt-4 text-sm overflow-x-auto">curl -sSL <%= project_script_url(@project.token) %> | sh</pre>
                   </div>
               </div>
             </div>
