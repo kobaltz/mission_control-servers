@@ -34,7 +34,7 @@ up much disk space within the database.
 
 Simple Installation
 
-![ScreenShot-2024-02-06-00-25-46](https://github.com/kobaltz/mission_control-servers/assets/635114/8486c465-27b5-4db8-a56f-c0df4c5fe583)
+![ScreenShot-2024-02-06-08-50-39](https://github.com/kobaltz/mission_control-servers/assets/635114/78f96ff6-ac14-4798-96a5-59a59eff574c)
 
 View all of your projects
 
