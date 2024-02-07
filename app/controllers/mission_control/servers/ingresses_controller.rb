@@ -4,9 +4,10 @@ module MissionControl::Servers
     before_action :set_project
 
     def create
-      @ingress = @project.services.new(ingress_params)
+      head :unprocessable_entity and return unless @project
+      ingress = @project.services.new(ingress_params)
 
-      if @ingress.save!
+      if ingress.save!
         head :ok
       else
         head :unprocessable_entity

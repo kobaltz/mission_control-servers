@@ -2,7 +2,7 @@
 
 one:
   project: one
-  hostname: MyString
+  hostname: HOST
   cpu: 9.99
   mem_used: 9.99
   mem_free: 9.99
@@ -10,7 +10,7 @@ one:
 
 two:
   project: two
-  hostname: MyString
+  hostname: HOST
   cpu: 9.99
   mem_used: 9.99
   mem_free: 9.99

@@ -13,12 +13,27 @@ module MissionControl::Servers
       assert_response :success
     end
 
+    test "should not get new" do
+      get new_project_url
+      assert_redirected_to projects_url
+    end
+
     test "should get new" do
+      MissionControl::Servers::Project.destroy_all
       get new_project_url
       assert_response :success
     end
 
-    test "should create project" do
+    test "should not create project" do
+      assert_no_difference("Project.count") do
+        post projects_url, params: { project: { title: @project.title, token: @project.token } }
+      end
+
+      assert_redirected_to projects_url
+    end
+
+    test "should create project when none exists" do
+      MissionControl::Servers::Project.destroy_all
       assert_difference("Project.count") do
         post projects_url, params: { project: { title: @project.title, token: @project.token } }
       end

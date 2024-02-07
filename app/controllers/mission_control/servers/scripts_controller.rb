@@ -3,6 +3,7 @@ module MissionControl::Servers
     before_action :set_project
 
     def show
+      head :not_found and return unless @project
       response.content_type = 'text/plain'
 
       # Render the script directly or from a file
