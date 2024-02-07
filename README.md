@@ -74,6 +74,10 @@ class AdminConstraint
 end
 ```
 
+## Demo
+
+You can see a demo of the application at [https://dashboard.railsenv.com/](https://dashboard.railsenv.com/)
+
 ## Screenshots
 
 Simple Installation

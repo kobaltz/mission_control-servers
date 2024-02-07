@@ -22,15 +22,10 @@ module MissionControl::Servers
         #!/bin/bash
 
         endpoint="#{project_ingress_url(@project.token)}"
-        cpu_usage=$(
-          top -bn1 | \
-          grep "Cpu(s)" | \
-          sed "s/.*, *\\([0-9.]*\\)%* id.*/\\1/" | \
-          awk '{print 100 - $1}'
-        )
+        cpu_usage=$(vmstat 1 5 | awk 'NR==4 {print 100 - $15}')
         mem_used=$(free -m | awk '/^Mem:/ {print $3}')
         mem_free=$(free -m | awk '/^Mem:/ {print $7}')
-        disk_free=$(df -h | awk '\$NF=="/"{print $4}')
+        disk_free=$(df -h | awk 'NF=="/"{print $4}')
         hostname=$(hostname)
 
         data="service[cpu]=$cpu_usage"
