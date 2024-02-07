@@ -31,6 +31,7 @@ to create new projects.
 MissionControl::Servers.configure do |config|
   config.single_project_mode = true
 end
+```
 
 # Usage
 
