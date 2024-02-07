@@ -27,18 +27,18 @@ module MissionControl::Servers
           sed "s/.*, *\\([0-9.]*\\)%* id.*/\\1/" | \
           awk '{print 100 - $1}'
         )
-        mem_free=$(free -m | awk '/^Mem:/ {print $3}')
-        mem_used=$(free -m | awk '/^Mem:/ {print $7}')
+        mem_used=$(free -m | awk '/^Mem:/ {print $3}')
+        mem_free=$(free -m | awk '/^Mem:/ {print $7}')
         disk_free=$(df -h | awk '\$NF=="/"{print $4}')
         hostname=$(hostname)
 
-        data="service[cpu]=\$cpu_usage"
-        data+="&service[mem_used]=\$mem_free"
-        data+="&service[mem_free]=\$mem_used"
-        data+="&service[disk_free]=\$disk_free"
-        data+="&service[hostname]=\$hostname"
+        data="service[cpu]=$cpu_usage"
+        data+="&service[mem_used]=$mem_used"
+        data+="&service[mem_free]=$mem_free"
+        data+="&service[disk_free]=$disk_free"
+        data+="&service[hostname]=$hostname"
 
-        curl -X POST "\$endpoint" -d "\$data"
+        curl -X POST $endpoint -d $data
         EOF
 
         chmod +x metrics.sh
