@@ -1,8 +1,8 @@
 <div class="px-4 sm:px-6 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold leading-6 text-gray-900">Projects</h1>
-      <p class="mt-2 text-sm text-gray-700">A project is an application that you're wanting to monitor.</p>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Projects</h1>
+      <p class="mt-2 text-sm text-gray-700">Resource monitor for your Ruby on Rails applications.</p>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
       <% if MissionControl::Servers.configuration.single_project_mode && !@projects.present? %>
@@ -14,60 +14,21 @@
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle">
         <table class="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Title</th>
-              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
-                <span class="sr-only">Dashboard</span>
-              </th>
-            </tr>
-          </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             <% @projects.each do |project| %>
               <tr>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900"><%= project.title %></td>
+                <td class="whitespace-nowrap text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"><%= project.title %></td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                   <%= link_to "Dashboards", project, class: "rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100" %>
                 </td>
               </tr>
               <tr>
                 <td colspan=2>
-
-                  <div class="mx-4 my-4 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                      <thead>
-                        <tr>
-                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Hostname</th>
-                          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">CPU Usage</th>
-                          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">Memory Used</th>
-                          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">Memory Used %</th>
-                          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">Memory Free</th>
-                          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">Disk Free</th>
-                          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                            <span class="sr-only">Select</span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% project.services.group_by(&:hostname).each do |hostname, services| %>
-                          <tr>
-                            <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
-                              <div class="font-medium text-gray-900"><%= hostname%></div>
-                            </td>
-                            <td class="px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= services.last.cpu %>%</td>
-                            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= (services.last.mem_used / 1024.0).round(1) %> GB</td>
-                            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= services.last.mem_percent %>%</td>
-                            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= (services.last.mem_free / 1024.0).round(1) %> GB</td>
-                            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= services.last.disk_free %></td>
-                            <td class="relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                              <%= link_to "Dashboard", project_path(project, hostname: hostname), class: "inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white" %>
-                            </td>
-                          </tr>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
-
+                  <%= turbo_frame_tag dom_id(project, "table"),
+                    src: project_dashboards_project_table_path(project.token),
+                    "data-controller": "refresh",
+                    "data-refresh-src-value": project_dashboards_project_table_path(project.token),
+                    "data-refresh-interval-value": 60000 %>
                 </td>
               </tr>
             <% end %>

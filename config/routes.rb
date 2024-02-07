@@ -3,6 +3,7 @@ MissionControl::Servers::Engine.routes.draw do
     resource :ingress, only: :create
     resource :script, only: :show
     namespace :dashboards do
+      resource :project_table, only: :show
       resource :cpu_usage, only: :show
       resource :memory_usage, only: :show
       resource :disk_free, only: :show
