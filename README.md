@@ -81,7 +81,7 @@ Simple Installation
 
 View all of your projects
 
-![ScreenShot-2024-02-06-00-26-37](https://github.com/kobaltz/mission_control-servers/assets/635114/b7e37682-34ff-404a-a158-92e310496696)
+![ScreenShot-2024-02-06-21-34-07](https://github.com/kobaltz/mission_control-servers/assets/635114/6f524e6e-1d4d-4587-9949-f1f3c57724c8)
 
 Detailed Dashboard updates automatically
 
