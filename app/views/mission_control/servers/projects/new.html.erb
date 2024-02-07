@@ -1,9 +1,9 @@
-<h1>New project</h1>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+  <h1 class="text-2xl text-center font-semibold text-gray-900 mb-8">New Project</h1>
 
-<%= render "form", project: @project %>
+  <%= render "form", project: @project %>
 
-<br>
-
-<div>
-  <%= link_to "Back to projects", projects_path %>
+  <div class="text-center mt-6">
+    <%= link_to "Back to projects", projects_path, class: "text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out" %>
+  </div>
 </div>

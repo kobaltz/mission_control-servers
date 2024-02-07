@@ -41,6 +41,15 @@ module MissionControl::Servers
       assert_redirected_to project_url(Project.last)
     end
 
+    test "should create project when many exists" do
+      MissionControl::Servers.configuration.single_project_mode = false
+      assert_difference("Project.count") do
+        post projects_url, params: { project: { title: "Example", token: SecureRandom.hex } }
+      end
+
+      assert_redirected_to project_url(Project.last)
+    end
+
     test "should show project" do
       get project_url(@project)
       assert_response :success
