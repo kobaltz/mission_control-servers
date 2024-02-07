@@ -17,6 +17,21 @@ Add a mount to your `config/routes.rb`
 mount MissionControl::Servers::Engine => "/mission_control-servers"
 ```
 
+# Configuration
+
+Within your application, you can make some configuration changes in how the gem operates. Below are the default
+configuration options. You can override these options by creating an initializer file.
+
+For example, if you're wanting to use MissionControl::Servers in a single project, then there is no need to have
+the ability to create multiple projects. You can set the `single_project_mode` to true which will hide the ability
+to create new projects.
+
+```ruby
+# config/initializers/mission_control_servers.rb
+MissionControl::Servers.configure do |config|
+  config.single_project_mode = true
+end
+
 # Usage
 
 Create a project. Once you create a project, you can easily copy the script specific to that project.

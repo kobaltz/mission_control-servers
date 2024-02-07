@@ -1,5 +1,6 @@
 require "mission_control/servers/version"
 require "mission_control/servers/engine"
+require "mission_control/servers/configuration"
 
 require "zeitwerk"
 
@@ -10,6 +11,16 @@ loader.setup
 
 module MissionControl
   module Servers
-    # Your code goes here...
+    class << self
+      attr_writer :configuration
+
+      def configuration
+        @configuration ||= Configuration.new
+      end
+
+      def configure
+        yield(configuration) if block_given?
+      end
+    end
   end
 end

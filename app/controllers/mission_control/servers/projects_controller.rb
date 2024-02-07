@@ -1,6 +1,7 @@
 module MissionControl::Servers
   class ProjectsController < ApplicationController
     before_action :set_project, only: %i[ show edit update destroy ]
+    before_action :verify_single_project_mode, only: %i[ new create ]
 
     # GET /projects
     def index
@@ -52,6 +53,12 @@ module MissionControl::Servers
     end
 
     private
+      def verify_single_project_mode
+        if MissionControl::Servers.configuration.single_project_mode && Project.any?
+          redirect_to projects_url, notice: "Single project mode is enabled. You can only have one project at a time."
+        end
+      end
+
       # Use callbacks to share common setup or constraints between actions.
       def set_project
         @project = Project.find(params[:id])
