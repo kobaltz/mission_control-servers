@@ -17,7 +17,7 @@ Add a mount to your `config/routes.rb`
 mount MissionControl::Servers::Engine => "/mission_control-servers"
 ```
 
-# Configuration
+## Configuration
 
 Within your application, you can make some configuration changes in how the gem operates. Below are the default
 configuration options. You can override these options by creating an initializer file.
@@ -33,7 +33,7 @@ MissionControl::Servers.configure do |config|
 end
 ```
 
-# Usage
+## Usage
 
 Create a project. Once you create a project, you can easily copy the script specific to that project.
 
@@ -48,7 +48,7 @@ Install a script which captures:
 The data will be retained for 7 days automatically. After 7 days, the data will start truncating itself
 so that it doesn't take up much disk space within the database.
 
-# Protecting the Dashboard
+## Protecting the Dashboard
 
 You can protect the dashboard by using a constraint. This will allow you to only allow certain users to access
 the dashboard. However, the ingress still needs to be accessible by the servers which are being monitored.
@@ -74,7 +74,7 @@ class AdminConstraint
 end
 ```
 
-# Screenshots
+## Screenshots
 
 Simple Installation
 
