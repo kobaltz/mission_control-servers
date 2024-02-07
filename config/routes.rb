@@ -8,6 +8,7 @@ MissionControl::Servers::Engine.routes.draw do
       resource :memory_usage, only: :show
       resource :disk_free, only: :show
       resource :cpu_history, only: :show
+      resource :memory_history, only: :show
     end
   end
   root to: "projects#index"
