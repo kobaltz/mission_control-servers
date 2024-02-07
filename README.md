@@ -86,7 +86,7 @@ View all of your projects
 
 Detailed Dashboard updates automatically
 
-![ScreenShot-2024-02-05-20-06-07](https://github.com/kobaltz/mission_control-servers/assets/635114/aea31795-80e5-41ae-bad4-8233386dc31f)
+![ScreenShot-2024-02-06-22-21-15](https://github.com/kobaltz/mission_control-servers/assets/635114/320c57ad-64bf-4582-a680-c79c91e62b60)
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
