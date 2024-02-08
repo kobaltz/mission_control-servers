@@ -18,6 +18,29 @@ module MissionControl::Servers
 
       def script_content
         <<~SCRIPT
+        if [ "$(id -u)" -eq 0 ]; then
+          SUDO=""
+        else
+          if command -v sudo > /dev/null; then
+            SUDO="sudo"
+          else
+            echo "Script needs to be run as root or with sudo installed."
+            exit 1
+          fi
+        fi
+
+        if command -v apt-get > /dev/null; then
+          $SUDO apt-get update
+          $SUDO apt-get install -y curl cron
+        elif command -v yum > /dev/null; then
+          $SUDO yum install -y curl cronie
+        elif command -v zypper > /dev/null; then
+          $SUDO zypper install -y curl cron
+        else
+          echo "Unsupported package manager. Please install curl and cron manually."
+          exit 1
+        fi
+
         cat <<'EOF' > metrics.sh
         #!/bin/bash
 
