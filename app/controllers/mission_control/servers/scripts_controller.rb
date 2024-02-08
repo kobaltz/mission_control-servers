@@ -29,10 +29,10 @@ module MissionControl::Servers
         hostname=$(hostname)
 
         data="service[cpu]=$cpu_usage"
-        data+="&service[mem_used]=$mem_used"
-        data+="&service[mem_free]=$mem_free"
-        data+="&service[disk_free]=$disk_free"
-        data+="&service[hostname]=$hostname"
+        data="$data&service[mem_used]=$mem_used"
+        data="$data&service[mem_free]=$mem_free"
+        data="$data&service[disk_free]=$disk_free"
+        data="$data&service[hostname]=$hostname"
 
         curl -X POST $endpoint -d $data
         EOF

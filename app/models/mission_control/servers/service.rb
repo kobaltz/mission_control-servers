@@ -2,6 +2,7 @@ module MissionControl::Servers
   class Service < ApplicationRecord
     belongs_to :project
     after_create :trim_old_records
+    before_create :set_hostname
 
     scope :ordered, -> { order(created_at: :desc) }
 
@@ -40,6 +41,7 @@ module MissionControl::Servers
     end
 
     def mem_percent
+      return 0 if mem_used.to_f + mem_free.to_f == 0.0
       (mem_used.to_f / (mem_used.to_f + mem_free.to_f) * 100).to_i
     end
 
@@ -47,6 +49,10 @@ module MissionControl::Servers
 
     def trim_old_records
       project.services.where(hostname: hostname).where(created_at: ..1.week.ago).delete_all
+    end
+
+    def set_hostname
+      self.hostname ||= "unnamed server"
     end
   end
 end

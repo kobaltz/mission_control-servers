@@ -48,8 +48,13 @@ module MissionControl::Servers
 
     # DELETE /projects/1
     def destroy
-      @project.destroy!
-      redirect_to projects_url, notice: "Project was successfully destroyed.", status: :see_other
+      if params[:hostname]
+        @project.services.where(hostname: params[:hostname]).delete_all
+        redirect_to project_dashboards_project_table_path(@project.token), notice: "Service was successfully destroyed.", status: :see_other
+      else
+        @project.destroy!
+        redirect_to projects_url, notice: "Project was successfully destroyed.", status: :see_other
+      end
     end
 
     private

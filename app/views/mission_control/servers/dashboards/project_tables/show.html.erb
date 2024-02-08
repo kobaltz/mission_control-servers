@@ -24,12 +24,13 @@
               <div class="font-medium text-gray-900"><%= hostname%></div>
             </td>
             <td class="px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= services.last.cpu %>%</td>
-            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= number_to_human_size(services.last.mem_used * 1.megabyte) %></td>
+            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= number_to_human_size(services.last.mem_used.to_f * 1.megabyte) %></td>
             <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= services.last.mem_percent %>%</td>
-            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= number_to_human_size(services.last.mem_free * 1.megabyte) %></td>
+            <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= number_to_human_size(services.last.mem_free.to_f * 1.megabyte) %></td>
             <td class="hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell"><%= services.last.disk_free %></td>
             <td class="relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
               <%= link_to "Dashboard", project_path(@project, hostname: hostname), target: :_top, class: "inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white" %>
+              <%= link_to "Remove", project_path(@project, hostname: hostname), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white" %>
             </td>
           </tr>
         <% end %>
