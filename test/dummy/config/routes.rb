@@ -3,4 +3,5 @@ Rails.application.routes.draw do
     mount MissionControl::Servers::Engine => "/mission_control-servers"
   end
   post '/mission_control-servers/projects/:project_id/ingress', to: 'mission_control/servers/ingresses#create'
+  root to: "mission_control/servers/projects#index"
 end
