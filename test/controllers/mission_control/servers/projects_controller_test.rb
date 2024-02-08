@@ -14,8 +14,9 @@ module MissionControl::Servers
     end
 
     test "should not get new" do
+      MissionControl::Servers::Project.destroy_all
       get new_project_url
-      assert_redirected_to projects_url
+      assert_response :success
     end
 
     test "should get new" do
@@ -25,8 +26,10 @@ module MissionControl::Servers
     end
 
     test "should not create project" do
+      Project.create(title: "Project", token: SecureRandom.hex)
+      MissionControl::Servers.configuration.single_project_mode = true
       assert_no_difference("Project.count") do
-        post projects_url, params: { project: { title: @project.title, token: @project.token } }
+        post projects_url, params: { project: { title: "Example", token: SecureRandom.hex } }
       end
 
       assert_redirected_to projects_url
@@ -35,7 +38,7 @@ module MissionControl::Servers
     test "should create project when none exists" do
       MissionControl::Servers::Project.destroy_all
       assert_difference("Project.count") do
-        post projects_url, params: { project: { title: @project.title, token: @project.token } }
+        post projects_url, params: { project: { title: "Example", token: SecureRandom.hex } }
       end
 
       assert_redirected_to project_url(Project.last)
