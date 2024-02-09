@@ -92,5 +92,10 @@ Detailed Dashboard updates automatically
 
 ![ScreenShot-2024-02-06-22-21-15](https://github.com/kobaltz/mission_control-servers/assets/635114/320c57ad-64bf-4582-a680-c79c91e62b60)
 
+Dark Mode support added in v0.1.4
+
+![ScreenShot-2024-02-08-23-08-05](https://github.com/kobaltz/mission_control-servers/assets/635114/5a7b2cd5-0218-448d-86fa-c54f821a8999)
+
+
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
