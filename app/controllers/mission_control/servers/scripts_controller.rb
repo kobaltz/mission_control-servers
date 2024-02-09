@@ -64,6 +64,25 @@ module MissionControl::Servers
 
         cron_job="* * * * * $(pwd)/metrics.sh"
         (crontab -l 2>/dev/null | grep -v -F "$cron_job"; echo "$cron_job") | crontab -
+        echo
+
+        echo "████████████████████████████████████████████████████████████████████████████"
+        echo "█                                                                          █"
+        echo "█  ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     ███████╗██████╗   █"
+        echo "█  ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     ██╔════╝██╔══██╗  █"
+        echo "█  ██║██╔██╗ ██║███████╗   ██║   ███████║██║     ██║     █████╗  ██║  ██║  █"
+        echo "█  ██║██║╚██╗██║╚════██║   ██║   ██╔══██║██║     ██║     ██╔══╝  ██║  ██║  █"
+        echo "█  ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗███████╗██████╔╝  █"
+        echo "█  ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═════╝   █"
+        echo "█                                                                          █"
+        echo "█        Metrics script installed and scheduled to run every minute.       █"
+        echo "█          This script is idempotent and can be run multiple times.        █"
+        echo "█                                                                          █"
+        echo "█            To uninstall, remove the cron job (crontab -e) and            █"
+        echo "█                      delete the metrics.sh file.                         █"
+        echo "█                                                                          █"
+        echo "████████████████████████████████████████████████████████████████████████████"
+
         SCRIPT
       end
   end
