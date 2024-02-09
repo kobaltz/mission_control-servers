@@ -48,6 +48,14 @@ Install a script which captures:
 The data will be retained for 7 days automatically. After 7 days, the data will start truncating itself
 so that it doesn't take up much disk space within the database.
 
+If you would like to put the dashboard on something like a Raspberry Pi, you can use the `dark` parameter to
+change the dashboard to a dark mode automatically. This will hopefully help provide a "hands off" approach to
+setting up the kiosk mode.
+
+```html
+http://localhost:3000/mission_control-servers/projects?dark=true
+```
+
 ## Protecting the Dashboard
 
 You can protect the dashboard by using a constraint. This will allow you to only allow certain users to access
@@ -92,7 +100,7 @@ Detailed Dashboard updates automatically
 
 ![ScreenShot-2024-02-06-22-21-15](https://github.com/kobaltz/mission_control-servers/assets/635114/320c57ad-64bf-4582-a680-c79c91e62b60)
 
-Dark Mode support added in v0.1.4
+Dark Mode support added in v0.1.4 (you can set this with a URL Param dark=true)
 
 ![ScreenShot-2024-02-08-23-08-05](https://github.com/kobaltz/mission_control-servers/assets/635114/5a7b2cd5-0218-448d-86fa-c54f821a8999)
 
