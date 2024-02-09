@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'turbo-rails'
   spec.add_dependency 'stimulus-rails'
   spec.add_dependency "tailwindcss-rails"
+  spec.add_development_dependency "simplecov"
 end
