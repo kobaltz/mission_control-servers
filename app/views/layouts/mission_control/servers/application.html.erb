@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full">
+<html class="">
 <head>
   <title>Mission control servers</title>
   <%= csrf_meta_tags %>
@@ -8,6 +8,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <%= stylesheet_link_tag "mission_control_servers_application", media: "all" %>
   <%= javascript_importmap_tags "application-mcs" %>
+  <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+  <%= yield :head %>
 </head>
 <body class="h-full">
   <div class="m-4">

@@ -72,4 +72,26 @@
     @apply bg-indigo-600;
     @apply dark:bg-indigo-800;
   }
+
+  .pie-chart {
+    height: 200px;
+    @apply text-sm font-semibold leading-6 text-gray-600;
+  }
+
+  .stat-chart {
+    height: 200px;
+    @apply flex justify-center items-center text-center;
+    @apply text-6xl font-semibold leading-6 text-gray-600 pt-5;
+  }
+
+  .connected-chart {
+    height: 200px;
+    @apply flex justify-center items-center text-center;
+    @apply text-3xl font-semibold leading-6 text-gray-600 pt-5;
+  }
+
+  .line-chart {
+    height: 300px;
+    @apply text-sm font-semibold leading-6 text-gray-600;
+  }
 }

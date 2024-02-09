@@ -49,7 +49,7 @@
         <div class="text-center">
           <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= hostname %></h2>
         </div>
-        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-3">
+        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
           <%= turbo_frame_tag dom_id(@project, [hostname, :cpu_usage].join('-')),
             src: project_dashboards_cpu_usage_path(project_id: @project.token, hostname: hostname),
             "data-controller": "refresh",
@@ -67,15 +67,19 @@
             "data-controller": "refresh",
             "data-refresh-src-value": project_dashboards_disk_free_path(project_id: @project.token, hostname: hostname),
             "data-refresh-interval-value": 60000 %>
+
+          <%= turbo_frame_tag dom_id(@project, [hostname, :last_seen].join('-')),
+            src: project_dashboards_last_seen_path(project_id: @project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_last_seen_path(project_id: @project.token, hostname: hostname),
+            "data-refresh-interval-value": 60000 %>
         </dl>
-        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-1">
+        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-2">
           <%= turbo_frame_tag dom_id(@project, [hostname, :cpu_history].join('-')),
             src: project_dashboards_cpu_history_path(project_id: @project.token, hostname: hostname),
             "data-controller": "refresh",
             "data-refresh-src-value": project_dashboards_cpu_history_path(project_id: @project.token, hostname: hostname),
             "data-refresh-interval-value": 60000 %>
-        </dl>
-        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-1">
           <%= turbo_frame_tag dom_id(@project, [hostname, :memory_history].join('-')),
             src: project_dashboards_memory_history_path(project_id: @project.token, hostname: hostname),
             "data-controller": "refresh",

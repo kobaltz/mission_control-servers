@@ -2,8 +2,8 @@
   <div class="progress-bar" style="height: 5px; width: 100%;">
     <div class="progress" data-refresh-target="progressBar" style="height: 100%; width: 100%;"></div>
   </div>
-  <div class="flex flex-col bg-gray-400/5 p-8">
-    <dt class="text-sm font-semibold leading-6 text-gray-600">
+  <div class="flex flex-col items-center justify-center bg-gray-400/5 p-8">
+    <dt class="pie-chart">
       <canvas data-controller="pie-chart"
         data-pie-chart-label-value="Memory Usage"
         data-pie-chart-idle-value="<%= @service.mem_free %>"

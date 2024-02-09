@@ -2,8 +2,8 @@
   <div class="progress-bar" style="height: 5px; width: 100%;">
     <div class="progress" data-refresh-target="progressBar" style="height: 100%; width: 100%;"></div>
   </div>
-  <div class="flex flex-col bg-gray-400/5 p-8">
-    <dt class="text-sm font-semibold leading-6 text-gray-600">
+  <div class="flex flex-col bg-gray-400/5 p-2">
+    <dt class="line-chart">
       <canvas data-controller="line-chart"
         data-line-chart-label-value="Memory Used History"
         data-line-chart-label-array-value="<%= @memory_history_data[:created_at_times] %>"

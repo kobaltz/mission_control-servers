@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(@project, [@hostname, :last_seen].join('-')) do %>
+  <div class="progress-bar bg-gray-300" style="height: 5px; width: 100%;">
+    <div class="progress bg-blue-500" data-refresh-target="progressBar" style="height: 100%; width: 100%;"></div>
+  </div>
+  <div class="flex flex-col bg-gray-400/5 p-8">
+    <dd class="card-heading">Last Seen</dd>
+    <dt class="connected-chart">
+      <%= @service.created_at.strftime("%Y-%-m-%-d") %><br><br>
+      <%= @service.created_at.strftime("%I:%M:%S %p") %>
+    </dt>
+  </div>
+<% end %>

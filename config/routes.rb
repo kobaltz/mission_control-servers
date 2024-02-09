@@ -7,6 +7,7 @@ MissionControl::Servers::Engine.routes.draw do
       resource :cpu_usage, only: :show
       resource :memory_usage, only: :show
       resource :disk_free, only: :show
+      resource :last_seen, only: :show
       resource :cpu_history, only: :show
       resource :memory_history, only: :show
     end
