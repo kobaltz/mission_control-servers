@@ -98,11 +98,13 @@ View all of your projects
 
 Detailed Dashboard updates automatically
 
-![ScreenShot-2024-02-06-22-21-15](https://github.com/kobaltz/mission_control-servers/assets/635114/320c57ad-64bf-4582-a680-c79c91e62b60)
+![ScreenShot-2024-02-09-06-55-57](https://github.com/kobaltz/mission_control-servers/assets/635114/4ec69699-6cce-4778-a772-2a92bd92e200)
+
 
 Dark Mode support added in v0.1.4 (you can set this with a URL Param dark=true)
 
-![ScreenShot-2024-02-08-23-08-05](https://github.com/kobaltz/mission_control-servers/assets/635114/5a7b2cd5-0218-448d-86fa-c54f821a8999)
+![ScreenShot-2024-02-09-06-49-18](https://github.com/kobaltz/mission_control-servers/assets/635114/234afc65-1853-493a-971f-db658687be23)
+
 
 
 ## License
