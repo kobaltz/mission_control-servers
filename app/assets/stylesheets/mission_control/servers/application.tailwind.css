@@ -2,6 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn-default {
-  @apply inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover: bg-gray-50 dark:bg-gray-800 dark:text-white dark:ring-gray-600 dark:hover:bg-gray-700;
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+    @apply dark:bg-gray-900 dark:text-gray-300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-white;
+    @apply dark:text-gray-300;
+  }
+}
+
+@layer components {
+  .text-gray-light {
+    @apply text-gray-500 ;
+    @apply dark:text-gray-400;
+  }
+
+  .text-gray-normal {
+    @apply text-gray-700 ;
+    @apply dark:text-gray-300;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center rounded-md;
+    @apply px-3 py-2 text-sm font-semibold;
+    @apply shadow-sm ring-1 ring-inset;
+  }
+
+  .btn-default {
+    @apply bg-white text-gray-900 ring-gray-300 hover:bg-gray-50;
+    @apply dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-700;
+  }
+
+  .btn-primary {
+    @apply bg-indigo-600 text-white ring-indigo-500 hover:bg-indigo-700;
+    @apply dark:bg-indigo-900 dark:text-gray-400 dark:ring-indigo-400 dark:hover:bg-indigo-400;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white ring-red-500 hover:bg-red-700;
+    @apply dark:bg-red-900 dark:text-gray-300 dark:ring-red-400 dark:hover:bg-red-400;
+  }
+
+  .btn-primary-subtle {
+    @apply bg-indigo-50 text-indigo-600 hover:bg-indigo-100;
+    @apply dark:bg-indigo-800 dark:text-indigo-200 dark:hover:bg-indigo-700;
+  }
+}
+
+@layer components {
+  .card-heading {
+    @apply order-first text-3xl font-semibold tracking-tight;
+    @apply text-gray-900;
+    @apply dark:text-gray-400;
+  }
+}
+
+@layer components {
+  .progress-bar {
+    @apply bg-gray-300;
+    @apply dark:bg-gray-600;
+  }
+
+  .progress {
+    @apply bg-indigo-600;
+    @apply dark:bg-indigo-800;
+  }
 }

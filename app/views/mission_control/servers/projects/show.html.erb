@@ -5,27 +5,25 @@
 
   <div class="mt-5 flex lg:ml-4 lg:mt-0">
     <span class="hidden sm:block">
-      <button data-controller="dark-mode" data-action="click->dark-mode#toggle" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Dark Mode</button>
+      <button data-controller="dark-mode" data-action="click->dark-mode#toggle" class="btn btn-default">Dark Mode</button>
 
-      <%= link_to edit_project_path(@project), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
+      <%= link_to edit_project_path(@project), class: "btn btn-default" do %>
         Edit
       <% end %>
-      <%= link_to projects_path, class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
-        Projects
-      <% end %>
+      <%= link_to projects_path, class: "btn btn-default" do %>Projects<% end %>
 
       <span data-controller="dialog copy">
-        <button data-action="click->dialog#show" class="rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">
+        <button data-action="click->dialog#show" class="btn btn-primary-subtle">
           Deploy
         </button>
         <div data-dialog-target="modal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div data-action="click->dialog#hide" class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
           <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center">
-            <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 md:max-w-3xl sm:w-full">
+            <div class="relative bg-white dark:bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 md:max-w-3xl sm:w-full">
               <div class="px-4 pt-5 pb-4 sm:p-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Installation Instructions</h3>
                 <div class="mt-2">
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-gray-light">
                     You'll make a cURL request from each server that you want to monitor.
                     Copy and paste the script below to each server to start sending metrics to your dashboard.
                   </p>
@@ -45,7 +43,7 @@
 </div>
 
 <% @services.each do |hostname, services| %>
-  <div class="bg-white py-4 sm:py-8">
+  <div class="py-4 sm:py-8">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-none">
         <div class="text-center">

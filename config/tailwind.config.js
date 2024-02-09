@@ -8,6 +8,9 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*.{erb,haml,html,slim}'
   ],
+  options: {
+    safelist: ['btn-primary-subtle'],
+  },
   theme: {
     extend: {
       fontFamily: {

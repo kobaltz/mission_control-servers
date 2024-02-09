@@ -8,8 +8,10 @@ export default class extends Controller {
   toggleDarkMode() {
     if (localStorage.getItem('darkMode') === 'true') {
       document.documentElement.classList.add('dark');
+      this.element.innerHTML = 'Light Mode';
     } else {
       document.documentElement.classList.remove('dark');
+      this.element.innerHTML = 'Dark Mode';
     }
   }
 
@@ -18,9 +20,11 @@ export default class extends Controller {
     if (htmlClasses.contains('dark')) {
       htmlClasses.remove('dark');
       localStorage.setItem('darkMode', 'false');
+      this.element.innerHTML = 'Dark Mode';
     } else {
       htmlClasses.add('dark');
       localStorage.setItem('darkMode', 'true');
+      this.element.innerHTML = 'Light Mode';
     }
   }
 }
