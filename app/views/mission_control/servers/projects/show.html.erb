@@ -5,6 +5,8 @@
 
   <div class="mt-5 flex lg:ml-4 lg:mt-0">
     <span class="hidden sm:block">
+      <button data-controller="dark-mode" data-action="click->dark-mode#toggle" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Dark Mode</button>
+
       <%= link_to edit_project_path(@project), class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
         Edit
       <% end %>
