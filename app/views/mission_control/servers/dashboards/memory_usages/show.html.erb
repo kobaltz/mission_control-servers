@@ -4,7 +4,8 @@
   </div>
   <div class="flex flex-col items-center justify-center bg-gray-400/5 p-8">
     <dt class="pie-chart">
-      <canvas data-controller="pie-chart"
+      <canvas class="chart"
+        data-controller="pie-chart"
         data-pie-chart-label-value="Memory Usage"
         data-pie-chart-idle-value="<%= @service.mem_free %>"
         data-pie-chart-idle-label-value="Idle"

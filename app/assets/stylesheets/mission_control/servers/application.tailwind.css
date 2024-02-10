@@ -63,6 +63,16 @@
 }
 
 @layer components {
+  .tab-link {
+    @apply  relative min-w-0 flex-1 overflow-hidden py-4 px-4 text-center text-sm font-medium focus:z-10;
+    @apply flex items-center justify-center;
+    @apply text-gray-100;
+    @apply bg-white hover:bg-gray-50;
+    @apply dark:bg-indigo-800 hover:bg-gray-50;
+  }
+}
+
+@layer components {
   .progress-bar {
     @apply bg-gray-300;
     @apply dark:bg-gray-600;

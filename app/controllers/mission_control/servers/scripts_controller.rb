@@ -64,8 +64,9 @@ module MissionControl::Servers
 
         cron_job="* * * * * $(pwd)/metrics.sh"
         (crontab -l 2>/dev/null | grep -v -F "$cron_job"; echo "$cron_job") | crontab -
+        echo "Sending first request to the server..."
+        $(pwd)/metrics.sh
         echo
-
         echo "████████████████████████████████████████████████████████████████████████████"
         echo "█                                                                          █"
         echo "█  ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     ███████╗██████╗   █"

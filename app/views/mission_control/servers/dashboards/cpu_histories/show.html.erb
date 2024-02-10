@@ -4,7 +4,8 @@
   </div>
   <div class="flex flex-col bg-gray-400/5 p-2">
     <dt class="line-chart">
-      <canvas data-controller="line-chart"
+      <canvas class="chart"
+        data-controller="line-chart"
         data-line-chart-label-value="CPU History"
         data-line-chart-label-array-value="<%= @cpu_history_data[:created_at_times] %>"
         data-line-chart-data-array-value="<%= @cpu_history_data[:cpu_usages] %>"
