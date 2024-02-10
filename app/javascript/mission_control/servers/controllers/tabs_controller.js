@@ -8,7 +8,6 @@ export default class extends Controller {
   connect() {
     this.showInitialTab();
     this.loopThroughTabs();
-    console.log(this.refreshIntervalValue);
   }
 
   showInitialTab() {

@@ -41,8 +41,8 @@
     </span>
   </div>
 </div>
-
-<%= tag.div data: { controller: "tabs", "tabs-refresh-interval-value": (params[:interval].to_i * 1000 || 10_000 ) } do %>
+<% interval = params[:interval].present? ? params[:interval].to_i * 1000 : 10_000 %>
+<%= tag.div data: { controller: "tabs", "tabs-refresh-interval-value": interval } do %>
   <div class="mt-3">
     <div class="">
       <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
