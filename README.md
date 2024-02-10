@@ -52,16 +52,43 @@ If you would like to put the dashboard on something like a Raspberry Pi, you can
 change the dashboard to a dark mode automatically. This will hopefully help provide a "hands off" approach to
 setting up the kiosk mode.
 
+## URL Configuration
+
+### Dark Mode
+
 ```html
 http://localhost:3000/mission_control-servers/projects?dark=true
 ```
+
+### Interval
 
 You can also adjust the interval when you have multiple servers on a project. The default setting is 10 seconds
 between servers, but this can be adjusted with an URL Parameter. The `interval` value is entered in seconds.
 
 ```html
-http://localhost:3000/mission_control-servers/projects?dark=true&interval=10
+http://localhost:3000/mission_control-servers/projects?interval=10
 ```
+
+### Combo History
+
+By default, the CPU Usage and Memory Usage Line Chart will be combined, but you can add the URL Parameter `?combo=false` to
+toggle this behavior. Default is `true`.
+
+```html
+http://localhost:3000/mission_control-servers/projects?combo=false
+```
+
+![ScreenShot-2024-02-10-08-55-20](https://github.com/kobaltz/mission_control-servers/assets/635114/6070efe4-0c1a-4e61-b604-b5929a050009)
+
+
+### Combining URL Parameters
+
+If you need to change multiple settings, you can chain these in the URL Parameters.
+
+```html
+http://localhost:3000/mission_control-servers/projects?interval=30&dark=true&combo=false
+```
+
 
 ## Protecting the Dashboard
 
@@ -108,6 +135,9 @@ Detailed Dashboard updates automatically
 ![ScreenShot-2024-02-10-00-26-22](https://github.com/kobaltz/mission_control-servers/assets/635114/b5c3cc44-b1b2-46ec-8b84-1290358e5ae3)
 
 Dark Mode support added in v0.1.4 (you can set this with a URL Param dark=true)
+
+![ScreenShot-2024-02-10-08-50-24](https://github.com/kobaltz/mission_control-servers/assets/635114/f09652a9-db88-4cf9-a834-e6c85c7e785a)
+
 
 ![ScreenShot-2024-02-10-00-25-48](https://github.com/kobaltz/mission_control-servers/assets/635114/12dc2e6b-b491-42f2-b53e-61e78088e22d)
 
