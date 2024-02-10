@@ -56,6 +56,13 @@ setting up the kiosk mode.
 http://localhost:3000/mission_control-servers/projects?dark=true
 ```
 
+You can also adjust the interval when you have multiple servers on a project. The default setting is 10 seconds
+between servers, but this can be adjusted with an URL Parameter. The `interval` value is entered in seconds.
+
+```html
+http://localhost:3000/mission_control-servers/projects?dark=true&interval=10
+```
+
 ## Protecting the Dashboard
 
 You can protect the dashboard by using a constraint. This will allow you to only allow certain users to access
@@ -98,12 +105,12 @@ View all of your projects
 
 Detailed Dashboard updates automatically
 
-![ScreenShot-2024-02-09-06-55-57](https://github.com/kobaltz/mission_control-servers/assets/635114/4ec69699-6cce-4778-a772-2a92bd92e200)
-
+![ScreenShot-2024-02-10-00-26-22](https://github.com/kobaltz/mission_control-servers/assets/635114/b5c3cc44-b1b2-46ec-8b84-1290358e5ae3)
 
 Dark Mode support added in v0.1.4 (you can set this with a URL Param dark=true)
 
-![ScreenShot-2024-02-09-06-49-18](https://github.com/kobaltz/mission_control-servers/assets/635114/234afc65-1853-493a-971f-db658687be23)
+![ScreenShot-2024-02-10-00-25-48](https://github.com/kobaltz/mission_control-servers/assets/635114/12dc2e6b-b491-42f2-b53e-61e78088e22d)
+
 
 
 
