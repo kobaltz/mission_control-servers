@@ -32,7 +32,7 @@ export default class extends Controller {
     const activeContent = this.contentTargets.find(content => content.dataset.target === targetId);
 
     if (activeTab && activeContent) {
-      activeTab.classList.add("text-xl", "text-gray-100", 'bg-indigo-500', 'transition', 'duration-300', 'ease-in-out');
+      activeTab.classList.add("text-xl", "text-gray-100", 'bg-indigo-500', 'dark:bg-indigo-900', 'transition', 'duration-300', 'ease-in-out');
 
       activeContent.classList.remove('absolute', 'top-0', 'left-full', 'w-0', 'h-0');
       activeContent.classList.add('relative');
@@ -42,7 +42,7 @@ export default class extends Controller {
   resetTabs() {
     this.linkTargets.forEach(link => {
       link.classList.add('transition', 'duration-300', 'ease-in-out');
-      link.classList.remove("text-xl", "text-gray-100", 'bg-indigo-500');
+      link.classList.remove("text-xl", "text-gray-100", 'bg-indigo-500', "dark:bg-indigo-900");
     });
     this.contentTargets.forEach(content => {
       content.classList.add('absolute', 'top-0', 'left-full', 'w-0', 'h-0');
