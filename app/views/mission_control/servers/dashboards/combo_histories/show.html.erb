@@ -1,0 +1,16 @@
+<%= turbo_frame_tag dom_id(@project, [@hostname, :combo_history].join('-')) do %>
+  <div class="progress-bar" style="height: 5px; width: 100%;">
+    <div class="progress" data-refresh-target="progressBar" style="height: 100%; width: 100%;"></div>
+  </div>
+  <div class="flex flex-col bg-gray-400/5 p-2">
+    <dt class="line-chart">
+      <canvas class="chart"
+        data-controller="combo-chart"
+        data-combo-chart-label-value="CPU & Memory History"
+        data-combo-chart-label-array-value="<%= @combo_history_data[:created_at_times] %>"
+        data-combo-chart-data-array-value="<%= @combo_history_data[:data].to_json %>"
+        data-combo-chart-color-value="rgb(54, 162, 235)"></canvas>
+    </dt>
+    <dd class="card-heading">CPU & Memory History</dd>
+  </div>
+<% end %>

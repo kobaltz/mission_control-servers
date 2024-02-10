@@ -34,7 +34,7 @@ export default class extends Controller {
     if (activeTab && activeContent) {
       activeTab.classList.add("text-xl", "text-gray-100", 'bg-indigo-500', 'dark:bg-indigo-900', 'transition', 'duration-300', 'ease-in-out');
 
-      activeContent.classList.remove('absolute', 'top-0', 'left-full', 'w-0', 'h-0');
+      activeContent.classList.remove('absolute', 'top-0', 'w-0', 'h-0');
       activeContent.classList.add('relative');
     }
   }
@@ -45,7 +45,7 @@ export default class extends Controller {
       link.classList.remove("text-xl", "text-gray-100", 'bg-indigo-500', "dark:bg-indigo-900");
     });
     this.contentTargets.forEach(content => {
-      content.classList.add('absolute', 'top-0', 'left-full', 'w-0', 'h-0');
+      content.classList.add('absolute', 'top-0', 'w-0', 'h-0');
       content.classList.remove('relative');
     });
   }

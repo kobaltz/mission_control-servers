@@ -1,0 +1,53 @@
+<%= tag.div id: [hostname, "tab-content"].join("-"), class: "py-4 sm:py-8 tab-content", "data-target": hostname, "data-tabs-target": "content" do %>
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:max-w-none">
+      <dl class="grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
+        <%= turbo_frame_tag dom_id(project, [hostname, :cpu_usage].join('-')),
+          src: project_dashboards_cpu_usage_path(project_id: project.token, hostname: hostname),
+          "data-controller": "refresh",
+          "data-refresh-src-value": project_dashboards_cpu_usage_path(project_id: project.token, hostname: hostname),
+          "data-refresh-interval-value": 30000 %>
+
+        <%= turbo_frame_tag dom_id(project, [hostname, :memory_usage].join('-')),
+          src: project_dashboards_memory_usage_path(project_id: project.token, hostname: hostname),
+          "data-controller": "refresh",
+          "data-refresh-src-value": project_dashboards_memory_usage_path(project_id: project.token, hostname: hostname),
+          "data-refresh-interval-value": 30000 %>
+
+        <%= turbo_frame_tag dom_id(project, [hostname, :disk_free].join('-')),
+          src: project_dashboards_disk_free_path(project_id: project.token, hostname: hostname),
+          "data-controller": "refresh",
+          "data-refresh-src-value": project_dashboards_disk_free_path(project_id: project.token, hostname: hostname),
+          "data-refresh-interval-value": 60000 %>
+
+        <%= turbo_frame_tag dom_id(project, [hostname, :last_seen].join('-')),
+          src: project_dashboards_last_seen_path(project_id: project.token, hostname: hostname),
+          "data-controller": "refresh",
+          "data-refresh-src-value": project_dashboards_last_seen_path(project_id: project.token, hostname: hostname),
+          "data-refresh-interval-value": 60000 %>
+      </dl>
+      <% if params[:combo] == "false" %>
+        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-2">
+          <%= turbo_frame_tag dom_id(project, [hostname, :cpu_history].join('-')),
+            src: project_dashboards_cpu_history_path(project_id: project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_cpu_history_path(project_id: project.token, hostname: hostname),
+            "data-refresh-interval-value": 60000 %>
+          <%= turbo_frame_tag dom_id(project, [hostname, :memory_history].join('-')),
+            src: project_dashboards_memory_history_path(project_id: project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_memory_history_path(project_id: project.token, hostname: hostname),
+            "data-refresh-interval-value": 60000 %>
+        </dl>
+      <% else %>
+        <dl class="mt-8 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-1 lg:grid-cols-1">
+          <%= turbo_frame_tag dom_id(project, [hostname, :combo_history].join('-')),
+            src: project_dashboards_combo_history_path(project_id: project.token, hostname: hostname),
+            "data-controller": "refresh",
+            "data-refresh-src-value": project_dashboards_combo_history_path(project_id: project.token, hostname: hostname),
+            "data-refresh-interval-value": 60000 %>
+        </dl>
+      <% end %>
+    </div>
+  </div>
+<% end %>

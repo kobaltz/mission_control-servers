@@ -12,13 +12,7 @@ export default class extends Controller {
       type: 'line',
       data: {
         labels: this.labelArrayValue,
-        datasets: [{
-          label: this.labelValue,
-          data: this.dataArrayValue,
-          fill: true,
-          borderColor: this.colorValue,
-          tension: 0.25
-        }]
+        datasets: this.dataArrayValue
       },
       options: {
         animation: false,
