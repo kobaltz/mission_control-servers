@@ -16,7 +16,14 @@ export default class extends Controller {
       },
       options: {
         animation: false,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            min: 0,
+            max: 100,
+            beginAtZero: true,
+          }
+        }
       }
     });
   }
