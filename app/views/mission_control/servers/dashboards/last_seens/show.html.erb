@@ -6,7 +6,7 @@
     <dd class="card-heading">Last Seen</dd>
     <dt class="connected-chart">
       <%= @service.created_at.strftime("%Y-%-m-%-d") %><br><br>
-      <%= @service.created_at.strftime("%I:%M:%S %p") %>
+      <%= @service.created_at.strftime("%-I:%M:%S %p") %>
     </dt>
   </div>
 <% end %>

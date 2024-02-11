@@ -12,6 +12,7 @@
           <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-normal lg:table-cell">Memory Used %</th>
           <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-normal lg:table-cell">Memory Free</th>
           <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-normal lg:table-cell">Disk Free</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-normal lg:table-cell">Last Seen</th>
           <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
             <span class="sr-only">Select</span>
           </th>
@@ -36,6 +37,9 @@
             <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= services.last.mem_percent %>%</td>
             <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= number_to_human_size(services.last.mem_free.to_f * 1.megabyte) %></td>
             <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= services.last.disk_free %></td>
+            <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell">
+              <%= services.last.created_at.strftime("%Y-%-m-%-d %-I:%M:%S %p") %>
+            </td>
             <td class="relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
               <%= link_to "Settings", edit_project_service_setting_path(@project, id: hostname), target: :_top, class: "btn btn-default" %>
               <%= link_to "Dashboard", project_path(@project, hostname: hostname), target: :_top, class: "btn btn-default" %>
