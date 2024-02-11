@@ -1,5 +1,6 @@
 MissionControl::Servers::Engine.routes.draw do
   resources :projects do
+    resources :service_settings, only: [:edit, :update]
     resource :ingress, only: :create
     resource :script, only: :show
     namespace :dashboards do

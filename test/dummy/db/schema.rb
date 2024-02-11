@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_05_031009) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_11_190130) do
   create_table "mission_control_servers_projects", force: :cascade do |t|
     t.string "title"
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_mission_control_servers_projects_on_token", unique: true
+  end
+
+  create_table "mission_control_servers_service_settings", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.string "hostname"
+    t.string "label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_mission_control_servers_service_settings_on_project_id"
   end
 
   create_table "mission_control_servers_services", force: :cascade do |t|
@@ -32,5 +41,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_031009) do
     t.index ["project_id"], name: "index_mission_control_servers_services_on_project_id"
   end
 
+  add_foreign_key "mission_control_servers_service_settings", "mission_control_servers_projects", column: "project_id"
   add_foreign_key "mission_control_servers_services", "mission_control_servers_projects", column: "project_id"
 end

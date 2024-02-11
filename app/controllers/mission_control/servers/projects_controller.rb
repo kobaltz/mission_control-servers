@@ -10,6 +10,8 @@ module MissionControl::Servers
 
     # GET /projects/1
     def show
+      hostnames = @project.services.pluck(:hostname).uniq
+      @service_settings = @project.service_settings.where(hostname: hostnames)
       @services = if params[:hostname]
         @project.services.where(hostname: params[:hostname]).group_by(&:hostname)
       else
@@ -66,7 +68,7 @@ module MissionControl::Servers
 
       # Use callbacks to share common setup or constraints between actions.
       def set_project
-        @project = Project.find(params[:id])
+        @project = Project.includes(:services, :service_settings).find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.

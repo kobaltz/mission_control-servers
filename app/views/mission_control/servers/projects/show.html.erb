@@ -54,7 +54,12 @@
           "data-target": hostname,
           "data-tabs-target": "link",
           class: "tab-link flex items-center justify-center #{first_tab_class} #{last_tab_class}" do %>
-          <%= hostname %>
+          <% service_setting = @service_settings.find { |s| s.hostname == hostname } %>
+          <% if service_setting %>
+            <%= service_setting.label %>
+          <% else %>
+            <%= hostname %>
+          <% end %>
         <% end %>
       <% end %>
     </nav>

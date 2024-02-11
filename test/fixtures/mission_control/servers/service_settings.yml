@@ -3,15 +3,9 @@
 one:
   project: one
   hostname: HOST
-  cpu: 9.99
-  mem_used: 9.99
-  mem_free: 9.99
-  disk_free: 9.99
+  label: Label
 
 two:
   project: two
   hostname: HOST2
-  cpu: 9.99
-  mem_used: 9.99
-  mem_free: 9.99
-  disk_free: 9.99
+  label: Label2

@@ -21,7 +21,15 @@
         <% @project.services.group_by(&:hostname).each do |hostname, services| %>
           <tr>
             <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
-              <div class="font-medium text-gray-normal"><%= hostname%></div>
+              <div class="font-medium text-gray-normal">
+                <% service_setting = @service_settings.find { |s| s.hostname == hostname } %>
+                <% if service_setting %>
+                  <%= service_setting.label %>
+                  (<%= hostname %>)
+                <% else %>
+                  <%= hostname %>
+                <% end %>
+              </div>
             </td>
             <td class="px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= services.last.cpu %>%</td>
             <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= number_to_human_size(services.last.mem_used.to_f * 1.megabyte) %></td>
@@ -29,6 +37,7 @@
             <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= number_to_human_size(services.last.mem_free.to_f * 1.megabyte) %></td>
             <td class="hidden px-3 py-3.5 text-sm text-gray-light lg:table-cell"><%= services.last.disk_free %></td>
             <td class="relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+              <%= link_to "Settings", edit_project_service_setting_path(@project, id: hostname), target: :_top, class: "btn btn-default" %>
               <%= link_to "Dashboard", project_path(@project, hostname: hostname), target: :_top, class: "btn btn-default" %>
               <%= link_to "Remove", project_path(@project, hostname: hostname), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "btn btn-danger" %>
             </td>

@@ -1,0 +1,23 @@
+<div class="lg:flex lg:items-center lg:justify-between">
+  <div class="min-w-0 flex-1"></div>
+  <div class="mt-5 flex lg:ml-4 lg:mt-0">
+    <span class="hidden sm:block">
+      <button data-controller="dark-mode" data-action="click->dark-mode#toggle" class="btn btn-default">Dark Mode</button>
+    </span>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+  <h1 class="text-2xl text-center font-semibold text-gray-normal mb-8">Editing <%= @service_setting.hostname %></h1>
+  <%= form_with(model: [@project, @service_setting], class: "max-w-lg mx-auto my-10") do |form| %>
+    <%= form.hidden_field :hostname %>
+    <div class="mb-4">
+      <%= form.label :label, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :label, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+    <div class="flex items-center justify-between">
+      <%= form.submit class: "btn btn-primary btn-block" %>
+      <%= link_to "Cancel", projects_path, class: "text-gray-light px-4 transition duration-150 ease-in-out" %>
+    </div>
+  <% end %>
+</div>
