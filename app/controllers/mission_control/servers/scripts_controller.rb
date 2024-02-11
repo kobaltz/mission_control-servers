@@ -3,7 +3,6 @@ module MissionControl::Servers
     before_action :set_project
 
     def show
-      head :not_found and return unless @project
       response.content_type = 'text/plain'
 
       # Render the script directly or from a file
@@ -13,7 +12,7 @@ module MissionControl::Servers
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_project
-        @project = Project.find_by(token: params[:project_id])
+        @project = Project.find_by!(token: params[:project_id])
       end
 
       def script_content
