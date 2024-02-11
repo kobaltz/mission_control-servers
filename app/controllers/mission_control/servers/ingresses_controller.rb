@@ -4,10 +4,9 @@ module MissionControl::Servers
     before_action :set_project
 
     def create
-      head :unprocessable_entity and return unless @project
       ingress = @project.services.new(ingress_params)
 
-      if ingress.save!
+      if ingress.save
         head :ok
       else
         head :unprocessable_entity
@@ -17,7 +16,7 @@ module MissionControl::Servers
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_project
-        @project = Project.find_by(token: params[:project_id])
+        @project = Project.find_by!(token: params[:project_id])
       end
 
       def ingress_params

@@ -35,7 +35,7 @@ module MissionControl::Servers
           }
         }
       end
-      assert_response :unprocessable_entity
+      assert_response :not_found
     end
   end
 end
