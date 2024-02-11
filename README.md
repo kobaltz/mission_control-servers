@@ -93,14 +93,18 @@ http://localhost:3000/mission_control-servers/projects?interval=30&dark=true&com
 ## Protecting the Dashboard
 
 You can protect the dashboard by using a constraint. This will allow you to only allow certain users to access
-the dashboard. However, the ingress still needs to be accessible by the servers which are being monitored.
+the dashboard. However, the ingress still needs to be accessible by the servers which are being monitored. In
+order to install the script on the servers, you also have to expose the endpoint for the script.
 
 ```ruby
 Rails.application.routes.draw do
+  get '/mission_control-servers/projects/:project_id/script', to: 'mission_control/servers/scripts#show'
+  post '/mission_control-servers/projects/:project_id/ingress', to: 'mission_control/servers/ingresses#create'
+  
   constraints AdminConstraint do
     mount MissionControl::Servers::Engine => "/mission_control-servers"
   end
-  post '/mission_control-servers/projects/:project_id/ingress', to: 'mission_control/servers/ingresses#create'
+  
 end
 ```
 
