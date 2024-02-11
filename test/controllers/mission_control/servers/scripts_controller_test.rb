@@ -13,7 +13,7 @@ module MissionControl::Servers
       assert_response :success
       assert_match @project.token, @response.body
       assert_match "#!/bin/bash", @response.body
-      assert_match "curl -X POST $endpoint -d $data", @response.body
+      assert_match "curl -X POST \"$endpoint\" -d \"$data\"", @response.body
     end
 
     test "should handle non-existing project" do
