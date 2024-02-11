@@ -41,43 +41,43 @@ module MissionControl::Servers
         fi
 
         cat <<'EOF' > metrics.sh
-          #!/bin/bash
+        #!/bin/bash
 
-          DEBUG=0
-          if [[ "$1" == "--debug" ]]; then
-            DEBUG=1
-          fi
+        DEBUG=0
+        if [[ "$1" == "--debug" ]]; then
+          DEBUG=1
+        fi
 
-          debug() {
-            if [[ $DEBUG -eq 1 ]]; then
-              echo "Debug: $1"
-            fi
-          }
-
-          endpoint="#{project_ingress_url(@project.token)}"
-          cpu_usage=$(vmstat 1 5 | awk 'NR==4 {print 100 - $15}')
-          mem_used=$(free -m | awk '/^Mem:/ {print $3}')
-          mem_free=$(free -m | awk '/^Mem:/ {print $7}')
-          disk_free=$(df -h | awk '$NF=="/"{print $4}')
-          hostname=$(hostname)
-
-          # Debug outputs
-          debug "CPU Usage: $cpu_usage"
-          debug "Memory Used: $mem_used MB"
-          debug "Memory Free: $mem_free MB"
-          debug "Disk Free: $disk_free"
-          debug "Hostname: $hostname"
-
-          data=$(printf "service[cpu]=%s&service[mem_used]=%s&service[mem_free]=%s&service[disk_free]=%s&service[hostname]=%s" \
-            "$cpu_usage" "$mem_used" "$mem_free" "$disk_free" "$hostname")
-
-          debug "Data being sent: $data"
-
+        debug() {
           if [[ $DEBUG -eq 1 ]]; then
-            curl -v -X POST "$endpoint" -d "$data"
-          else
-            curl -X POST "$endpoint" -d "$data"
+            echo "Debug: $1"
           fi
+        }
+
+        endpoint="#{project_ingress_url(@project.token)}"
+        cpu_usage=$(vmstat 1 5 | awk 'NR==4 {print 100 - $15}')
+        mem_used=$(free -m | awk '/^Mem:/ {print $3}')
+        mem_free=$(free -m | awk '/^Mem:/ {print $7}')
+        disk_free=$(df -h | awk '$NF=="/"{print $4}')
+        hostname=$(hostname)
+
+        # Debug outputs
+        debug "CPU Usage: $cpu_usage"
+        debug "Memory Used: $mem_used MB"
+        debug "Memory Free: $mem_free MB"
+        debug "Disk Free: $disk_free"
+        debug "Hostname: $hostname"
+
+        data=$(printf "service[cpu]=%s&service[mem_used]=%s&service[mem_free]=%s&service[disk_free]=%s&service[hostname]=%s" \
+          "$cpu_usage" "$mem_used" "$mem_free" "$disk_free" "$hostname")
+
+        debug "Data being sent: $data"
+
+        if [[ $DEBUG -eq 1 ]]; then
+          curl -v -X POST "$endpoint" -d "$data"
+        else
+          curl -X POST "$endpoint" -d "$data"
+        fi
         EOF
 
         chmod +x metrics.sh
@@ -85,7 +85,7 @@ module MissionControl::Servers
         cron_job="* * * * * $(pwd)/metrics.sh"
         (crontab -l 2>/dev/null | grep -v -F "$cron_job"; echo "$cron_job") | crontab -
         echo "Sending first request to the server..."
-        $(pwd)/metrics.sh
+        bash $(pwd)/metrics.sh
         echo
         echo "████████████████████████████████████████████████████████████████████████████"
         echo "█                                                                          █"
