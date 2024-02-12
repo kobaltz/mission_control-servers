@@ -52,6 +52,11 @@ If you would like to put the dashboard on something like a Raspberry Pi, you can
 change the dashboard to a dark mode automatically. This will hopefully help provide a "hands off" approach to
 setting up the kiosk mode.
 
+You can also create public links with read only permissions.
+
+![image](https://github.com/kobaltz/mission_control-servers/assets/635114/f867bb8a-e372-4e24-9823-7294a6bb4810)
+
+
 ## URL Configuration
 
 ### Dark Mode
@@ -98,6 +103,7 @@ order to install the script on the servers, you also have to expose the endpoint
 
 ```ruby
 Rails.application.routes.draw do
+  get '/mission_control-servers/projects/:project_id/public_projects/:id', to: 'mission_control/servers/public_projects#show'
   get '/mission_control-servers/projects/:project_id/script', to: 'mission_control/servers/scripts#show'
   post '/mission_control-servers/projects/:project_id/ingress', to: 'mission_control/servers/ingresses#create'
   
