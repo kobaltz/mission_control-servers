@@ -1,0 +1,13 @@
+<%= turbo_frame_tag :public_links do %>
+
+<h1>Editing public project</h1>
+
+<%= render "form", public_project: @public_project %>
+
+<br>
+
+<div>
+  <%= link_to "Show this public project", @public_project %> |
+  <%= link_to "Back to public projects", public_projects_path %>
+</div>
+<% end %>

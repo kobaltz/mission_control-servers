@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  name: One Title
+  token: <%= SecureRandom.hex(16) %>
+
+two:
+  project: two
+  name: Two Title
+  token: <%= SecureRandom.hex(16) %>

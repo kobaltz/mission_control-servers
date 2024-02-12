@@ -28,6 +28,24 @@
               <tr>
                 <td class="whitespace-nowrap text-2xl font-bold tracking-tight text-gray-normal sm:text-3xl"><%= project.title %></td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
+                  <span data-controller="dialog">
+                    <%= link_to "Public Links", project_public_projects_path(project), "data-action": "click->dialog#show", "data-turbo-frame": "public_links", class: "btn btn-default" %>
+                    <div data-dialog-target="modal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                      <div data-action="click->dialog#hide" class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+                      <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center">
+                        <div class="relative bg-white dark:bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 md:max-w-3xl sm:w-full">
+                          <div class="px-4 pt-5 pb-4 sm:p-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Public Links</h3>
+                            <div class="mt-2">
+                              <p class="text-sm text-gray-light">
+                                <%= turbo_frame_tag :public_links %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
                   <%= link_to "Dashboards", project, target: :_top, class: "btn btn-default" %>
                   <%= link_to "Remove", project, data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "btn btn-danger" %>
                 </td>

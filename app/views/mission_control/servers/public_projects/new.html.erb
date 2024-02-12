@@ -1,0 +1,5 @@
+<%= turbo_frame_tag :public_links do %>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+    <%= render "form", project: @project, public_project: @public_project %>
+  </div>
+<% end %>

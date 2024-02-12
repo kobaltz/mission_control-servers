@@ -1,0 +1,20 @@
+<div class="mt-3">
+  <nav class="isolate flex divide-x divide-gray-200 dark:divide-gray-500 rounded-lg shadow" aria-label="Tabs">
+    <% services.each_with_index do |(hostname, services), index| %>
+      <% first_tab_class = index.zero? ? "rounded-l-lg" : "" %>
+      <% last_tab_class = index == services.length - 1 ? "rounded-r-lg" : "" %>
+      <%= tag.a "#",
+        "data-action": "click->tabs#changeTab",
+        "data-target": hostname,
+        "data-tabs-target": "link",
+        class: "tab-link flex items-center justify-center #{first_tab_class} #{last_tab_class}" do %>
+        <% service_setting = service_settings.find { |s| s.hostname == hostname } %>
+        <% if service_setting %>
+          <%= service_setting.label %>
+        <% else %>
+          <%= hostname %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </nav>
+</div>

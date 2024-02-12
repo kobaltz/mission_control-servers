@@ -1,0 +1,11 @@
+<%= form_with model: [project, public_project] do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <%= form.submit class: "btn btn-primary btn-block" %>
+    <%= link_to "Cancel", project_public_projects_path(project), class: "text-gray-light px-4 transition duration-150 ease-in-out" %>
+  </div>
+<% end %>

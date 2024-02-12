@@ -1,0 +1,22 @@
+<div class="lg:flex lg:items-center lg:justify-between">
+  <div class="min-w-0 flex-1">
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"><%= @project.title %></h2>
+  </div>
+
+  <div class="mt-5 flex lg:ml-4 lg:mt-0">
+    <span class="hidden sm:block">
+      <button data-controller="dark-mode" data-action="click->dark-mode#toggle" class="btn btn-default">Dark Mode</button>
+    </span>
+  </div>
+</div>
+<% interval = params[:interval].present? ? params[:interval].to_i * 1000 : 10_000 %>
+<%= tag.div data: { controller: "tabs", "tabs-refresh-interval-value": interval } do %>
+  <%= render partial: "mission_control/servers/projects/tabs",
+        locals: {
+          services: @services,
+          service_settings: @service_settings
+        } %>
+  <% @services.each do |hostname, _services| %>
+    <%= render partial: "mission_control/servers/projects/panels", locals: { project: @project, hostname: hostname } %>
+  <% end %>
+<% end %>

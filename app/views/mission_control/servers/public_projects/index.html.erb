@@ -1,0 +1,54 @@
+<%= turbo_frame_tag :public_links do %>
+  <div data-controller="url-maker">
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <%= check_box_tag "dark", "true", false, data: { action: "change->url-maker#updateLink", url_maker_target: "dark" }, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
+        Dark Mode
+      </div>
+      <div class="sm:flex-auto">
+        <%= check_box_tag "combo", "false", false, data: { action: "change->url-maker#updateLink", url_maker_target: "combo" }, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
+        Disable Combo Chart
+      </div>
+      <div class="sm:flex-auto">
+        <%= text_field_tag "interval", "10", data: { action: "input->url-maker#updateLink", url_maker_target: "interval" }, class: "w-20 border-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-1 sm:text-sm sm:leading-6" %>
+        Tab Interval
+      </div>
+      <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+          <%= link_to "New Public Link", new_project_public_project_path(@project), class: "btn btn-primary" %>
+      </div>
+    </div>
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead>
+        <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-normal sm:pl-6">Name</th>
+          <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+            <span class="sr-only">Select</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @public_projects.each do |public_project| %>
+          <tr>
+            <td class="relative py-4 pl-4 pr-3 text-sm sm:pl-6">
+              <div class="font-medium text-gray-normal">
+                <%= public_project.name %>
+              </div>
+            </td>
+            <td class="relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+              <div class="flex items-center justify-end space-x-2"> <!-- Flex container with space between items -->
+                <div data-controller="copy">
+                  <%= link_to "PUBLIC LINK", project_public_project_url(@project, id: public_project.token), "data-url-maker-target": "link", class: "hidden" %>
+                  <div data-action="click->copy#copy" class="btn btn-default">Public Link</div>
+                  <span data-copy-target="source" class="hidden" data-url-maker-target="output">
+                    link
+                  </span>
+                </div>
+                <%= link_to "Remove", project_public_project_path(@project, public_project), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" }, class: "btn btn-danger" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

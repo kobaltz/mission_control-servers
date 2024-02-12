@@ -43,29 +43,12 @@
 </div>
 <% interval = params[:interval].present? ? params[:interval].to_i * 1000 : 10_000 %>
 <%= tag.div data: { controller: "tabs", "tabs-refresh-interval-value": interval } do %>
-  <div class="mt-3">
-    <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
-    <nav class="isolate flex divide-x divide-gray-200 dark:divide-gray-500 rounded-lg shadow" aria-label="Tabs">
-      <% @services.each_with_index do |(hostname, services), index| %>
-        <% first_tab_class = index.zero? ? "rounded-l-lg" : "" %>
-        <% last_tab_class = index == @services.length - 1 ? "rounded-r-lg" : "" %>
-        <%= tag.a "#",
-          "data-action": "click->tabs#changeTab",
-          "data-target": hostname,
-          "data-tabs-target": "link",
-          class: "tab-link flex items-center justify-center #{first_tab_class} #{last_tab_class}" do %>
-          <% service_setting = @service_settings.find { |s| s.hostname == hostname } %>
-          <% if service_setting %>
-            <%= service_setting.label %>
-          <% else %>
-            <%= hostname %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </nav>
-  </div>
-
+  <%= render partial: "mission_control/servers/projects/tabs",
+        locals: {
+          services: @services,
+          service_settings: @service_settings
+        } %>
   <% @services.each do |hostname, _services| %>
-    <%= render partial: "mission_control/servers/projects/panels", locals: { project: @project, hostname: hostname }%>
+    <%= render partial: "mission_control/servers/projects/panels", locals: { project: @project, hostname: hostname } %>
   <% end %>
 <% end %>
