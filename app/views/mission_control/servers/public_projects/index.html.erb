@@ -10,11 +10,11 @@
         Disable Combo Chart
       </div>
       <div class="sm:flex-auto">
-        <%= text_field_tag "interval", "10", data: { action: "input->url-maker#updateLink", url_maker_target: "interval" }, class: "w-20 border-1 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-1 sm:text-sm sm:leading-6" %>
+        <%= text_field_tag "interval", "10", data: { action: "input->url-maker#updateLink", url_maker_target: "interval" }, class: "w-20 border-1 bg-transparent py-1.5 pl-1 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:ring-1 sm:text-sm sm:leading-6" %>
         Tab Interval
       </div>
       <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <%= link_to "New Public Link", new_project_public_project_path(@project), class: "btn btn-primary" %>
+        <%= link_to "New Public Link", new_project_public_project_path(@project), class: "btn btn-primary" %>
       </div>
     </div>
     <table class="min-w-full divide-y divide-gray-300">

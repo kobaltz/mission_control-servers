@@ -1,6 +1,7 @@
 require "mission_control/servers/version"
 require "mission_control/servers/engine"
 require "mission_control/servers/configuration"
+require "mission_control/servers/routing_helpers"
 
 require "zeitwerk"
 

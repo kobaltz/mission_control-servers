@@ -103,14 +103,25 @@ order to install the script on the servers, you also have to expose the endpoint
 
 ```ruby
 Rails.application.routes.draw do
-  get '/mission_control-servers/projects/:project_id/public_projects/:id', to: 'mission_control/servers/public_projects#show'
-  get '/mission_control-servers/projects/:project_id/script', to: 'mission_control/servers/scripts#show'
-  post '/mission_control-servers/projects/:project_id/ingress', to: 'mission_control/servers/ingresses#create'
-  
+  MissionControl::Servers::RoutingHelpers.add_public_routes_helper(self)
+
   constraints AdminConstraint do
     mount MissionControl::Servers::Engine => "/mission_control-servers"
   end
-  
+
+end
+```
+If you want to change the endpoint, you can do so by changing the mount path.
+
+```ruby
+Rails.application.routes.draw do
+  engine_mount_path = "/dashymcdashface"
+  MissionControl::Servers::RoutingHelpers.add_public_routes_helper(self, engine_mount_path)
+
+  constraints AdminConstraint do
+    mount MissionControl::Servers::Engine => engine_mount_path
+  end
+
 end
 ```
 
