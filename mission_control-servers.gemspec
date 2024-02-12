@@ -10,8 +10,12 @@ Gem::Specification.new do |spec|
   spec.description = "Dashboard for managing servers."
   spec.license     = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
+  spec.post_install_message = <<~MESSAGE
+    MissionControl::Servers requires additional setup. Please run the following
+    command to install the necessary files:
+
+    bin/rails mission_control_servers:install:migrations
+  MESSAGE
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/kobaltz/mission_control-servers"

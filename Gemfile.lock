@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mission_control-servers (0.2.8)
+    mission_control-servers (0.3.0)
       importmap-rails
       rails (>= 7.0.0)
       stimulus-rails
