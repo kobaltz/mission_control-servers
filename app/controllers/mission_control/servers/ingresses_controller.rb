@@ -5,8 +5,8 @@ module MissionControl::Servers
 
     def create
       ingress = @project.services.new(ingress_params)
-
-      if ingress.save
+      request = @project.requests.new(tally_params)
+      if ingress.save && request.save
         head :ok
       else
         head :unprocessable_entity
@@ -21,6 +21,10 @@ module MissionControl::Servers
 
       def ingress_params
         params.require(:service).permit(:hostname, :cpu, :mem_used, :mem_free, :disk_free)
+      end
+
+      def tally_params
+        params.require(:tally).permit(:hostname, :'sum_2xx', :'sum_3xx', :'sum_4xx', :'sum_5xx', :unknown)
       end
   end
 end

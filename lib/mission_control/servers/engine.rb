@@ -7,6 +7,10 @@ module MissionControl
     class Engine < ::Rails::Engine
       isolate_namespace MissionControl::Servers
 
+      initializer 'mission_control-servers.middleware.request_tally' do |app|
+        app.middleware.use RequestTallyMiddleware
+      end
+
       initializer "mission_control-servers.assets" do |app|
         app.config.assets.paths << root.join("app/javascript")
         app.config.assets.precompile += %w[ mission_control_servers_manifest ]

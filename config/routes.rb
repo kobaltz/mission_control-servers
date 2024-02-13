@@ -13,6 +13,8 @@ MissionControl::Servers::Engine.routes.draw do
       resource :cpu_history, only: :show
       resource :memory_history, only: :show
       resource :combo_history, only: :show
+      resource :request_total, only: :show
+      resource :request_chart, only: :show
     end
   end
   root to: "projects#index"
