@@ -11,6 +11,8 @@ module MissionControl
           get "#{engine_mount_path}/projects/:project_id/dashboards/cpu_history", to: "mission_control/servers/dashboards/cpu_histories#show"
           get "#{engine_mount_path}/projects/:project_id/dashboards/memory_history", to: "mission_control/servers/dashboards/memory_histories#show"
           get "#{engine_mount_path}/projects/:project_id/dashboards/combo_history", to: "mission_control/servers/dashboards/combo_histories#show"
+          get "#{engine_mount_path}/projects/:project_id/dashboards/request_total", to: "mission_control/servers/dashboards/request_totals#show"
+          get "#{engine_mount_path}/projects/:project_id/dashboards/request_chart", to: "mission_control/servers/dashboards/request_charts#show"
           get "#{engine_mount_path}/projects/:project_id/public_projects/new", to: "mission_control/servers/public_projects#new", as: :new_project_public_project
           get "#{engine_mount_path}/projects/:project_id/public_projects/:id", to: "mission_control/servers/public_projects#show"
           get "#{engine_mount_path}/projects/:project_id/script", to: "mission_control/servers/scripts#show"

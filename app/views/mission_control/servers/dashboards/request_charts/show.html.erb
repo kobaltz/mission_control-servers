@@ -1,0 +1,15 @@
+<%= turbo_frame_tag dom_id(@project, [@hostname, :request_chart].join('-')) do %>
+  <div class="progress-bar" style="height: 5px; width: 100%;">
+    <div class="progress" data-refresh-target="progressBar" style="height: 100%; width: 100%;"></div>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-gray-400/5 p-8">
+    <dt class="pie-chart">
+      <canvas class="chart"
+        data-controller="status-chart"
+        data-status-chart-data-value="<%= @summary_hash.to_json %>"></canvas>
+    </dt>
+    <dd class="card-heading">
+      Response Codes
+    </dd>
+  </div>
+<% end %>
