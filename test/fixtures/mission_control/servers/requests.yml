@@ -3,17 +3,17 @@
 one:
   project: one
   hostname: MyString
-  2xx: 1
-  3xx: 1
-  4xx: 1
-  5xx: 1
+  sum_2xx: 1
+  sum_3xx: 1
+  sum_4xx: 1
+  sum_5xx: 1
   unknown: 1
 
 two:
   project: two
   hostname: MyString
-  2xx: 1
-  3xx: 1
-  4xx: 1
-  5xx: 1
+  sum_2xx: 1
+  sum_3xx: 1
+  sum_4xx: 1
+  sum_5xx: 1
   unknown: 1

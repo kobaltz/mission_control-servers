@@ -5,6 +5,11 @@ require "stimulus-rails"
 module MissionControl
   module Servers
     class Engine < ::Rails::Engine
+      if ENV['RAILS_ENV'] == 'test'
+        require 'simplecov'
+        SimpleCov.start 'rails'
+      end
+
       isolate_namespace MissionControl::Servers
 
       initializer 'mission_control-servers.middleware.request_tally' do |app|
