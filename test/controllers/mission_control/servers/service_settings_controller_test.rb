@@ -13,5 +13,10 @@ module MissionControl::Servers
       get edit_project_service_setting_path(@project, id: @service.hostname)
       assert_response :success
     end
+
+    test "should patch update" do
+      patch project_service_setting_path(@project, id: @service.hostname), params: { service_setting: { label: "example", request_hostname: "example" }}
+      assert_response :redirect
+    end
   end
 end

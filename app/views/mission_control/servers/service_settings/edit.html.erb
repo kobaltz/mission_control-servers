@@ -7,13 +7,45 @@
   </div>
 </div>
 
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-10" data-controller="hostname-select">
   <h1 class="text-2xl text-center font-semibold text-gray-normal mb-8">Editing <%= @service_setting.hostname %></h1>
   <%= form_with(model: [@project, @service_setting], class: "max-w-lg mx-auto my-10") do |form| %>
     <%= form.hidden_field :hostname %>
     <div class="mb-4">
       <%= form.label :label, class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= form.text_field :label, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      <p class="block text-gray-400 text-sm mt-1">
+        This is for display purposes on the dashboard. It's a good idea to name it something that makes sense to you.
+      </p>
+    </div>
+    <div class="mb-4">
+      <%= form.label :request_hostname, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :request_hostname, "data-hostname-select-target": "input",
+        class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      <p class="block text-gray-400 text-sm mt-1">
+        With the server requets and status codes coming in, they may report a different hostname if you're running
+        them in docker or a different environment. This is the hostname that will be used to match the server.
+      </p>
+    </div>
+    <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Recent Hosts</dt>
+      <p class="block text-gray-400 text-sm mt-1">
+        Here are some of the recent hostnames that have been requested. You can select one of these if you'd like.
+      </p>
+      <dd class="mt-2 text-sm text-gray-900">
+        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+          <% @requests.each do |hostname| %>
+            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+              <div class="flex w-0 flex-1 items-center">
+                <span class="truncate font-medium dark:text-indigo-200" data-target="hostname"><%= hostname %></span>
+              </div>
+              <div class="ml-4 flex-shrink-0">
+                <a href="#" data-action="hostname-select#copy" class="font-medium text-indigo-600 dark:text-indigo-200">Select</a>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </dd>
     </div>
     <div class="flex items-center justify-between">
       <%= form.submit class: "btn btn-primary btn-block" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_11_235451) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_14_160849) do
   create_table "mission_control_servers_projects", force: :cascade do |t|
     t.string "title"
     t.string "token"
@@ -29,12 +29,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_11_235451) do
     t.index ["token"], name: "index_mission_control_servers_public_projects_on_token", unique: true
   end
 
+  create_table "mission_control_servers_requests", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.string "hostname"
+    t.integer "sum_2xx", default: 0
+    t.integer "sum_3xx", default: 0
+    t.integer "sum_4xx", default: 0
+    t.integer "sum_5xx", default: 0
+    t.integer "unknown", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hostname", "created_at"], name: "idx_on_hostname_created_at_8a0738bdaa"
+    t.index ["project_id"], name: "index_mission_control_servers_requests_on_project_id"
+  end
+
   create_table "mission_control_servers_service_settings", force: :cascade do |t|
     t.integer "project_id", null: false
     t.string "hostname"
     t.string "label"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "request_hostname"
     t.index ["project_id"], name: "index_mission_control_servers_service_settings_on_project_id"
   end
 
@@ -47,11 +62,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_11_235451) do
     t.string "disk_free"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hostname"], name: "index_mission_control_servers_services_on_hostname"
+    t.index ["hostname", "created_at"], name: "idx_on_hostname_created_at_6ac255d862"
     t.index ["project_id"], name: "index_mission_control_servers_services_on_project_id"
   end
 
   add_foreign_key "mission_control_servers_public_projects", "mission_control_servers_projects", column: "project_id"
+  add_foreign_key "mission_control_servers_requests", "mission_control_servers_projects", column: "project_id"
   add_foreign_key "mission_control_servers_service_settings", "mission_control_servers_projects", column: "project_id"
   add_foreign_key "mission_control_servers_services", "mission_control_servers_projects", column: "project_id"
 end

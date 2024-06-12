@@ -5,6 +5,7 @@ module MissionControl::Servers
       @service_setting = @project.service_settings.find_or_initialize_by(hostname: params[:id])
       @service_setting.label = params[:id] if @service_setting.new_record?
       @service_setting.save # To limit having to have a create action
+      @requests = @project.requests.select(:hostname).distinct.pluck(:hostname)
     end
 
     def update
@@ -21,7 +22,7 @@ module MissionControl::Servers
     end
 
     def label
-      params.require(:service_setting).permit(:label)
+      params.require(:service_setting).permit(:label, :hostname, :request_hostname)
     end
   end
 end

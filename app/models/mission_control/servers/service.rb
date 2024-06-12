@@ -6,83 +6,87 @@ module MissionControl::Servers
 
     scope :ordered, -> { order(created_at: :desc) }
 
-    def self.combo_history(services, start_time: 1.hour.ago, end_time: Time.now.utc)
-      timestamps = (start_time.to_i..end_time.to_i).step(60).map { |t| Time.at(t).utc.change(sec: 0).to_i }
-      grouped_services = services.group_by { |service| service.created_at.utc.change(sec: 0).to_i }
+    class << self
+      def combo_history(services, start_time: 1.hour.ago, end_time: Time.now.utc)
+        timestamps = (start_time.to_i..end_time.to_i).step(60).map { |t| Time.at(t).utc.change(sec: 0).to_i }
+        grouped_services = services.group_by { |service| service.created_at.utc.change(sec: 0).to_i }
 
-      cpu_usages = []
-      memory_usages = []
-      created_at_times = []
+        cpu_usages = []
+        memory_usages = []
+        created_at_times = []
 
-      timestamps.each do |timestamp|
-        relevant_services = grouped_services[timestamp] || []
-        max_cpu_service = relevant_services.max_by(&:cpu)
-        max_memory_service = relevant_services.max_by do |service|
-          return 0 if service.mem_used.to_f + service.mem_free.to_f == 0.0
-          service.mem_used.to_f / (service.mem_used.to_f + service.mem_free.to_f)
+        timestamps.each do |timestamp|
+          relevant_services = grouped_services[timestamp] || []
+          max_cpu_service = relevant_services.max_by(&:cpu)
+          max_memory_service = relevant_services.max_by do |service|
+            return 0 if service.mem_used.to_f + service.mem_free.to_f == 0.0
+            service.mem_used.to_f / (service.mem_used.to_f + service.mem_free.to_f)
+          end
+          cpu_usages << (max_cpu_service&.cpu || 0).to_f
+          if max_memory_service
+            total_memory = max_memory_service.mem_used.to_f + max_memory_service.mem_free.to_f
+            percentage_memory_used = (max_memory_service.mem_used.to_f / total_memory) * 100
+            memory_usages << percentage_memory_used.to_i
+          else
+            memory_usages << 0.0
+          end
+          created_at_times << Time.at(timestamp).utc.strftime('%H:%M%p')
         end
-        cpu_usages << (max_cpu_service&.cpu || 0).to_f
-        if max_memory_service
-          total_memory = max_memory_service.mem_used.to_f + max_memory_service.mem_free.to_f
-          percentage_memory_used = (max_memory_service.mem_used.to_f / total_memory) * 100
-          memory_usages << percentage_memory_used.to_i
-        else
-          memory_usages << 0.0
+
+        data = [
+          {
+            label: 'CPU Usage',
+            data: cpu_usages,
+            fill: true,
+            borderColor: "rgb(54, 162, 235)",
+            tension: 0.25
+          },
+          {
+            label: 'Memory Usage',
+            data: memory_usages,
+            fill: true,
+            borderColor: "rgb(235, 127, 54)",
+            tension: 0.25
+          }
+        ]
+        { created_at_times: created_at_times, data: data }
+      end
+
+
+      def cpu_usage_history(services, start_time: 1.hour.ago, end_time: Time.now.utc)
+        timestamps = (start_time.to_i..end_time.to_i).step(60).map { |t| Time.at(t).utc.change(sec: 0).to_i }
+        grouped_services = services.group_by { |service| service.created_at.utc.change(sec: 0).to_i }
+
+        cpu_usages = []
+        created_at_times = []
+
+        timestamps.each do |timestamp|
+          relevant_services = grouped_services[timestamp] || []
+          max_cpu_service = relevant_services.max_by(&:cpu)
+          cpu_usages << (max_cpu_service&.cpu || 0).to_f
+          created_at_times << Time.at(timestamp).utc.strftime('%H:%M%p')
         end
-        created_at_times << Time.at(timestamp).utc.strftime('%H:%M%p')
+
+        { cpu_usages: cpu_usages, created_at_times: created_at_times }
       end
 
-      data = [
-        {
-          label: 'CPU Usage',
-          data: cpu_usages,
-          fill: true,
-          borderColor: "rgb(54, 162, 235)",
-          tension: 0.25
-        },
-        {
-          label: 'Memory Usage',
-          data: memory_usages,
-          fill: true,
-          borderColor: "rgb(235, 127, 54)",
-          tension: 0.25
-        }
-      ]
-      { created_at_times: created_at_times, data: data }
-    end
 
-    def self.cpu_usage_history(services, start_time: 1.hour.ago, end_time: Time.now.utc)
-      timestamps = (start_time.to_i..end_time.to_i).step(60).map { |t| Time.at(t).utc.change(sec: 0).to_i }
-      grouped_services = services.group_by { |service| service.created_at.utc.change(sec: 0).to_i }
+      def memory_usage_history(services, start_time: 1.hour.ago, end_time: Time.now.utc)
+        timestamps = (start_time.to_i..end_time.to_i).step(60).map { |t| Time.at(t).utc.change(sec: 0).to_i }
+        grouped_services = services.group_by { |service| service.created_at.utc.change(sec: 0).to_i }
 
-      cpu_usages = []
-      created_at_times = []
+        memory_usages = []
+        created_at_times = []
 
-      timestamps.each do |timestamp|
-        relevant_services = grouped_services[timestamp] || []
-        max_cpu_service = relevant_services.max_by(&:cpu)
-        cpu_usages << (max_cpu_service&.cpu || 0).to_f
-        created_at_times << Time.at(timestamp).utc.strftime('%H:%M%p')
+        timestamps.each do |timestamp|
+          relevant_services = grouped_services[timestamp] || []
+          max_memory_service = relevant_services.max_by(&:mem_used)
+          memory_usages << (max_memory_service&.mem_used || 0).to_f
+          created_at_times << Time.at(timestamp).utc.strftime('%H:%M%p')
+        end
+
+        { memory_usages: memory_usages, created_at_times: created_at_times }
       end
-
-      { cpu_usages: cpu_usages, created_at_times: created_at_times }
-    end
-
-    def self.memory_usage_history(services, start_time: 1.hour.ago, end_time: Time.now.utc)
-      timestamps = (start_time.to_i..end_time.to_i).step(60).map { |t| Time.at(t).utc.change(sec: 0).to_i }
-      grouped_services = services.group_by { |service| service.created_at.utc.change(sec: 0).to_i }
-
-      memory_usages = []
-      created_at_times = []
-
-      timestamps.each do |timestamp|
-        relevant_services = grouped_services[timestamp] || []
-        max_memory_service = relevant_services.max_by(&:mem_used)
-        memory_usages << (max_memory_service&.mem_used || 0).to_f
-        created_at_times << Time.at(timestamp).utc.strftime('%H:%M%p')
-      end
-
-      { memory_usages: memory_usages, created_at_times: created_at_times }
     end
 
     def mem_percent

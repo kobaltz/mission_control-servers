@@ -5,15 +5,14 @@ Gem::Specification.new do |spec|
   spec.version     = MissionControl::Servers::VERSION
   spec.authors     = ["Dave Kimura"]
   spec.email       = ["dave@k-innovations.net"]
-  spec.homepage    = "https://github.com/kobaltz/misson_control-servers"
+  spec.homepage    = "https://github.com/kobaltz/mission_control-servers"
   spec.summary     = "Dashboard for managing servers."
   spec.description = "Dashboard for managing servers."
   spec.license     = "MIT"
 
   spec.post_install_message = <<~MESSAGE
-    MissionControl::Servers requires additional setup. Please run the following
-    command to install the necessary files:
-
+    MissionControl::Servers requires additional setup.
+    Please run the following command to install the necessary files:
     bin/rails mission_control_servers:install:migrations
   MESSAGE
 
